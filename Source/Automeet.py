@@ -191,8 +191,8 @@ print("=" * 110, end='\n')
 
 # Login Credentials //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 print('Google Account Login:\n---------------------', end='\n')
-USERNAME = input("User Name                      : ")
-PASSWORD = white_password(prompt="Password                       : ")
+USERNAME = input("User Name   : ")
+PASSWORD = white_password(prompt="Password    : ")
 
 # Assigning Drivers //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 options = Options()
