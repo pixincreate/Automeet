@@ -4,6 +4,7 @@ Content Automation for https://www.meet.google.com
 Licensed under CC0-1.0 License to Pavana Narayana Bhat
 ------------------------------------------------------------------------------------------------------------------------
 Code by: Pavana Narayana Bhat AKA PiXinCreate
+Finalised on 5 - 10 - 2020 at 08:52 PM IST
 ------------------------------------------------------------------------------------------------------------------------
 Description:
     Selenium + Chromedriver based python script to
@@ -108,6 +109,7 @@ def time_table():       # Checking for today's classes
             class_time = dt.datetime.strptime(class_data[0], "%H:%M").replace(year=current_time.year,
                                                                               month=current_time.month,
                                                                               day=current_time.day)
+
         driver.implicitly_wait(5)
         timetable_list.append([class_time,
                                class_data[1],
@@ -123,32 +125,34 @@ def present_time():
 
 def stale_element_relief():       # Refreshing DOM. It waits for the element to not be stale
     time_table()
-    time.sleep(7)
+    time.sleep(4)
     ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
-    join = WebDriverWait(driver, 9, ignored_exceptions=ignored_exceptions) \
+    join = WebDriverWait(driver, 5, ignored_exceptions=ignored_exceptions) \
         .until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "wKIIs")))
     join.click()
 
 
 def live_count():
-    driver.implicitly_wait(7)
+    driver.implicitly_wait(3)
+
     live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
     if live_count.number_of_participants == '':
         live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip('()')
-    live_count.max_count = 0
+
     if int(live_count.number_of_participants) > live_count.max_count:
         live_count.max_count = int(live_count.number_of_participants)
+
     print(f'{"Live count of participants: " + live_count.number_of_participants}\r', end='', flush=True)
 
     try:
-        live_count.participant_left_notif = driver.find_element_by_class_name("aGJE1b")
+        live_count.participant_left_notif = driver.find_element_by_class_name("aGJE1b").text
     except NoSuchElementException:
         pass
+
     time.sleep(1)
 
 
 def end_class():
-    print('\n')
     time.sleep(3)
     # Clicks leave call button
     leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
@@ -161,14 +165,14 @@ def end_class():
         driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
         leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[9]/div[2]/div[2]/div").click()
 
-    print('The class ' + classTitle + ' ended now.', end='\n\n')
+    print('The class ' + classTitle + ' ended now.', end='\n')
     time.sleep(3)
     # Returns to the Home Screen
     driver.get('https://meet.google.com/')
 
 
-def exit_now():       # Exits the script when input credentials are incorrect
-    print('=' * 110, end='\n\n')
+def exit_now():       # Exits the script
+    print('=' * 90, end='\n')
     try:
         driver.quit()
     except WebDriverException:
@@ -178,21 +182,19 @@ def exit_now():       # Exits the script when input credentials are incorrect
 
 
 # In The Beginning ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-print('=' * 110, end='\n\n')
-print("        •          ••      ••    ••••••••••    ••••••••••    ••••      ••••    ••••••••••    ••••••••••    ••••••••••  ")
-print("       •••         ••      ••        ••        ••      ••    •• ••    •• ••    ••            ••                ••      ")
-print("      •• ••        ••      ••        ••        ••      ••    ••  ••  ••  ••    ••            ••                ••      ")
-print("     ••   ••       ••      ••        ••        ••      ••    ••   ••••   ••    ••••••••      ••••••••          ••      ")
-print("    •••••••••      ••      ••        ••        ••      ••    ••    ••    ••    ••            ••                ••      ")
-print("   ••       ••     ••      ••        ••        ••      ••    ••          ••    ••            ••                ••      ")
-print("  ••         ••    ••••••••••        ••        ••••••••••    ••          ••    ••••••••••    ••••••••••        ••      ")
-print("                                   Google Meet Automater by Pavana Narayana Bhat                                       ", end='\n\n')
-print("=" * 110, end='\n')
+print('\n')
+print("      ••      ••    ••  ••••••••  ••••••••  ••••  ••••  ••••••••  ••••••••  ••••••••  ")
+print("     ••••     ••    ••     ••     ••    ••  •• •••• ••  ••        ••           ••     ")
+print("    ••  ••    ••    ••     ••     ••    ••  ••  ••  ••  ••••••    ••••••       ••     ")
+print("   ••••••••   ••    ••     ••     ••    ••  ••      ••  ••        ••           ••     ")
+print("  ••      ••  ••••••••     ••     ••••••••  ••      ••  ••••••••  ••••••••     ••     ")
+print("                   Google Meet Automater by Pavana Narayana Bhat                      ", end='\n\n')
+print("=" * 90, end='\n')
 
 # Login Credentials //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 print('Google Account Login:\n---------------------', end='\n')
-USERNAME = input("User Name   : ")
-PASSWORD = white_password(prompt="Password    : ")
+USERNAME = input("User Name : ")
+PASSWORD = white_password(prompt="Password  : ")
 
 # Assigning Drivers //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 options = Options()
@@ -223,7 +225,7 @@ try:
 except WebDriverException:
     print('Please check your internet connection and try again.')
     exit_now()
-print('=' * 110, end='\n')
+print('=' * 90, end='\n')
 
 # Redirecting to Google Meet Web-Page ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 time.sleep(2)
@@ -231,6 +233,7 @@ driver.get('https://meet.google.com')       # Redirecting to Google Meet from st
 
 # Automation Starts from here ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 lastClass = False
+live_count.max_count = 0
 
 # Deleting the user data, i.e., taken in the beginning
 del USERNAME, PASSWORD
@@ -252,8 +255,8 @@ else:
     print(end='\n')
 
     # Printing Logs/Happenings on the console
-    print('=' * 110, end='\n')
-    print('Logs:\n-----', end='\n')
+    print('=' * 90, end='\n')
+    print('Activity Logs:\n--------------', end='\n')
 
     for i in range(0, len(time_table())):
 
@@ -270,6 +273,12 @@ else:
                 i += 1
         except IndexError:
             lastClass = True
+            driver.execute_script("alert('This is the last class for today.')")
+            time.sleep(4)
+            try:
+                driver.switch_to.alert.accept()
+            except NoAlertPresentException:
+                pass
 
         # Joining the class 90 seconds before the scheduled time.
         if ((scheduledTimeInSeconds - present_time()) <= 90) or "\nNOW" in time_table()[i][2].text.upper():
@@ -283,22 +292,22 @@ else:
 
         else:
             # When waiting time to class is more than 1m 30s
-            driver.execute_script("alert('Will retry 1 minute before the class is conducted.')")
+            driver.execute_script("alert('Will retry 1m 30s before the class is conducted.')")
             time.sleep(4)
             try:
                 driver.switch_to.alert.accept()
             except NoAlertPresentException:
                 pass
-            print('Will retry 1 minute before the class is conducted.')
+            print('Will retry 1m 30s before the class is conducted.')
             time.sleep((scheduledTimeInSeconds - 90) - present_time())
-            print('Joining the class ' + classTitle + ' now...', end='\n')
+            print('Joining the class \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
                 time_table()[i][2].click()
             except StaleElementReferenceException:
                 stale_element_relief()
 
         # Turning Mic and Camera Off (Can be turned ON manually)
-        time.sleep(2)
+        time.sleep(1)
         try:
             blockPopUp = driver.find_element_by_xpath(
                 "/html/body/div[2]/div[3]/div/div[2]/div[2]/div[1]/div/span/span").click()
@@ -316,8 +325,32 @@ else:
             # Clicks the ASK TO JOIN button
             driver.find_element_by_xpath(
                 "//*[@id='yDmH0d']/c-wiz/div/div/div[5]/div[3]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/span/span").click()
-            driver.implicitly_wait(60)
-        except NoSuchElementException as e:
+            try:
+                WebDriverWait(driver, 600).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, "crqnQb"))).click()
+            except NoSuchElementException:
+                driver.refresh()
+                try:
+                    driver.execute_script("alert('Kindly ask the host to allow you in personally.')")
+                    time.sleep(3)
+                    try:
+                        driver.switch_to.alert.accept()
+                    except NoAlertPresentException:
+                        pass
+                    print('Kindly ask the host to allow you in personally.')
+                    WebDriverWait(driver, 600).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, "crqnQb"))).click()
+                except NoSuchElementException:
+                    driver.execute_script("alert('Please restart the Automeet once the host allows you in or continue manually.\nAutomeet will now "
+                                          "exit excluding Browser Instance.')")
+                    time.sleep(4)
+                    try:
+                        driver.switch_to.alert.accept()
+                    except NoAlertPresentException:
+                        pass
+                    print('Please restart the Automeet once the host allows you in or continue manually.\n'
+                          'Automeet will now exit excluding Browser Instance.')
+                    exit()
+
+        except NoSuchElementException:
             # Clicks the JOIN NOW button
             driver.find_element_by_class_name("l4V7wb").click()
         except ElementClickInterceptedException:
@@ -328,19 +361,23 @@ else:
         # Clicks END button if number of student count goes lesser than 1/4th of total strength.
         try:
             # Wait for 4 minutes basically, just in order to get the number of participants increased
-            for seconds in range(240):
+            for seconds in range(0, 20):
                 live_count()
 
             # Ends session when either of the condition is satisfied
             while True:
                 live_count()
                 try:
-                    if ((int(live_count.number_of_participants)) <= int(live_count.max_count/4)) or ("Several participants left the meeting." in
-                                                                                                     live_count.participant_left_notif):
+
+                    if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count)/4)) or ("Several participants left the meeting." in
+                                                                                                          live_count.participant_left_notif):
+                        print(f'{"                                                                "}\r', end='', flush=True)
                         break
                     else:
                         pass
                 except ValueError:
+                    pass
+                except AttributeError:
                     pass
         except WebDriverException:
             print('\n\nBrowser unexpectedly closed by the user.', end='\n')
@@ -348,7 +385,7 @@ else:
         end_class()
 
         if lastClass:
-            driver.execute_script("alert(\'This was the last Class for today. Tab closes in 5 seconds:)\')")
-            print('Last class ended.\n')
+            driver.execute_script("alert('This was the last Class for today.\nTab closes in 5 seconds.')")
+            print('\nLast class ended.\n')
             time.sleep(5)
             exit_now()
