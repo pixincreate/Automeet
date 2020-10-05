@@ -4,7 +4,7 @@ Content Automation for https://www.meet.google.com
 Licensed under CC0-1.0 License to Pavana Narayana Bhat
 ------------------------------------------------------------------------------------------------------------------------
 Code by: Pavana Narayana Bhat AKA PiXinCreate
-Finalised on 5 - 10 - 2020 at 08:52 PM IST
+Finalised on 5 - 10 - 2020 at 10:55 PM IST
 ------------------------------------------------------------------------------------------------------------------------
 Description:
     Selenium + Chromedriver based python script to
@@ -21,6 +21,9 @@ import os
 import sys
 from msvcrt import getch
 
+from ctypes import windll, byref
+from ctypes import wintypes
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -34,6 +37,12 @@ from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import NoAlertPresentException
+
+# Defining the console dimensions ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+STDOUT = -11
+hdl = windll.kernel32.GetStdHandle(STDOUT)
+rect = wintypes.SMALL_RECT(0, 0, 90, 29)  # (left, top, right, bottom) -> w = ((r - l) + 1); h = ((b - t) + 1)
+windll.kernel32.SetConsoleWindowInfo(hdl, True, byref(rect))
 
 
 # Required Functions to be called ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,6 +191,7 @@ def exit_now():       # Exits the script
 
 
 # In The Beginning ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+os.system('cls')
 print('\n')
 print("      ••      ••    ••  ••••••••  ••••••••  ••••  ••••  ••••••••  ••••••••  ••••••••  ")
 print("     ••••     ••    ••     ••     ••    ••  •• •••• ••  ••        ••           ••     ")
