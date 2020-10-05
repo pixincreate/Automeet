@@ -41,7 +41,7 @@ Incase you find any bugs, please raise an *[Issue Ticket](https://github.com/pix
 
 *Q*: **Is it safe to use and trustable**?
 
-*A*: Read the security.md by clicking *[here](https://github.com/pixincreate/Automeet/blob/main/Security.md)* first. Yes, you can trust **Automeet** and the its processes. You can check it's **source** by clicking *[here](https://github.com/pixincreate/Automeet/blob/main/Source/Automeet.py)*.
+*A*: Read the security.md by clicking *[here](https://github.com/pixincreate/Automeet/blob/main/Security.md)* first. Yes, you can trust **Automeet** and its processes. You can check it's **source** by clicking *[here](https://github.com/pixincreate/Automeet/blob/main/Source/Automeet.py)*.
 
 ### LICENSE:
 This project comes under CC0-1.0 License copyrighted to *(C) Pavana Narayana Bhat*. Click *[here](https://github.com/pixincreate/Online-Class-Automater/blob/master/LICENSE)* to learn more about the permissions offered by this license.
