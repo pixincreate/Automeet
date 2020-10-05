@@ -54,4 +54,7 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Merged Automeet_C with Automeet_B, reduced confusion in users as well.
 - Added live participants' count.
 - Fixed *End button* issue that used to give ```NoSuchElementException``` as the `button array` hides itself when more than `1` participant present in the meeting.
+- Some extra exceptions added through Testing.
+- Made the `Live Count` to get replaced by the `Session ended now` notification.
+- Made `Ask To Join` button to work in a more specific way by making it wait `Explicitly` and finalised the code as of now.
 #
