@@ -32,6 +32,13 @@ Incase you find any bugs, please raise an *[Issue Ticket](https://github.com/pix
 
 **Note:**  A **Warning** exists in both the .py files. To learn why the warning exists, click *[here](https://stackoverflow.com/questions/63958561/how-to-merge-chromedriver-exe-with-a-python-script-that-runs-on-selenium-webdriv/63959432#63959432)*.
 
+### FAQ:
+*Q*: **Why _Automeet_ is SLOW at Start up**?
+*A*: It is a standalone executable file that contains all the required files to run the **Automeet**. As the executable creates a temporary folder to extract the files that are requierd by the **Automeet** to run during the Start up, it takes around `2 -3` seconds at Max!
+
+*Q*: Is it safe to use and trustable?
+*A*: Read the security.md by clicking *[here](https://github.com/pixincreate/Automeet/blob/main/Security.md)* first. Yes, you can trust **Automeet** and the its processes. You can check it's **source** by clicking *[here](https://github.com/pixincreate/Automeet/blob/main/Source/Automeet.py)*.
+
 ### LICENSE:
 This project comes under CC0-1.0 License copyrighted to *(C) Pavana Narayana Bhat*. Click *[here](https://github.com/pixincreate/Online-Class-Automater/blob/master/LICENSE)* to learn more about the permissions offered by this license.
 
@@ -56,5 +63,6 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Fixed *End button* issue that used to give ```NoSuchElementException``` as the `button array` hides itself when more than `1` participant present in the meeting.
 - Some extra exceptions added through Testing.
 - Made the `Live Count` to get replaced by the `Session ended now` notification.
+- Added default dimensions to the executable. 
 - Made `Ask To Join` button to work in a more specific way by making it wait `Explicitly` and finalised the code as of now.
 #
