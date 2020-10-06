@@ -15,38 +15,38 @@ created by selenium when the code is executed.
 NOTE: Password is invisible. Check the readme.md for more information.
 """
 # Importing packages /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-import time
-import datetime as dt
 import os
 import sys
+import time
+import datetime as dt
 from msvcrt import getch
 
 from ctypes import windll, byref
-from ctypes import wintypes
+from ctypes.wintypes import SMALL_RECT
 
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
-from selenium.common.exceptions import StaleElementReferenceException
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import WebDriverException
-from selenium.common.exceptions import ElementNotInteractableException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import ElementNotInteractableException
+from selenium.common.exceptions import ElementClickInterceptedException
 
-# Defining the console dimensions ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-STDOUT = -11
-hdl = windll.kernel32.GetStdHandle(STDOUT)
-rect = wintypes.SMALL_RECT(0, 0, 90, 29)  # (left, top, right, bottom) -> w = ((r - l) + 1); h = ((b - t) + 1)
-windll.kernel32.SetConsoleWindowInfo(hdl, True, byref(rect))
+
+# Setting console size ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+os.system('mode 91')
+windll.kernel32.SetConsoleWindowInfo(windll.kernel32.GetStdHandle(-11), True, byref(SMALL_RECT(-1, -1, 89, 28)))  # (left, top, right, bottom)
+# W = (R - L) + 1; H = (B - T) + 1
 
 
 # Required Functions to be called ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-def white_password(prompt):
+def white_password(prompt):       # Secure password input, an alternative to getpass
     print(prompt, end='', flush=True)
     buf = b''
     while True:
@@ -65,7 +65,7 @@ def white_password(prompt):
     return buf.decode(encoding='utf-8')
 
 
-def resource_path(another_way):
+def resource_path(another_way):       # Provides the facility to run on both terminal as well as python console
     try:
         usual_way = sys._MEIPASS
     except Exception:
@@ -73,7 +73,7 @@ def resource_path(another_way):
     return os.path.join(usual_way, another_way)
 
 
-def login(username, password):
+def login(username, password):       # Logs in the user
     driver.get('https://accounts.google.com/o/oauth2/auth/identifier?client_id=717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent'
                '.com&scope=profile%20email&redirect_uri=https%3A%2F%2Fstackauth.com%2Fauth%2Foauth2%2Fgoogle&state=%7B%22sid%22%3A1%2C%22st%22%3A%2'
                '259%3A3%3Abbc%2C16%3A561fd7d2e94237c0%2C10%3A1599663155%2C16%3Af18105f2b08c3ae6%2C2f06af367387a967072e3124597eeb4e36c2eff92d3eef697'
@@ -126,7 +126,7 @@ def time_table():       # Checking for today's classes
     return timetable_list
 
 
-def present_time():
+def present_time():       # Grabs the current time
     presenttime = dt.datetime.now().strftime("%I:%M %p")
     current_time_in_seconds = int((dt.datetime.strptime(presenttime, "%I:%M %p") - dt.datetime(1900, 1, 1)).total_seconds())
     return current_time_in_seconds
@@ -141,7 +141,7 @@ def stale_element_relief():       # Refreshing DOM. It waits for the element to 
     join.click()
 
 
-def live_count():
+def live_count():       # Print Live count of participants
     driver.implicitly_wait(3)
 
     live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
@@ -161,7 +161,7 @@ def live_count():
     time.sleep(1)
 
 
-def end_class():
+def end_class():       # Ends the current session
     time.sleep(3)
     # Clicks leave call button
     leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
@@ -181,7 +181,7 @@ def end_class():
 
 
 def exit_now():       # Exits the script
-    print('=' * 90, end='\n')
+    print('-' * 90, end='\n')
     try:
         driver.quit()
     except WebDriverException:
@@ -191,7 +191,6 @@ def exit_now():       # Exits the script
 
 
 # In The Beginning ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-os.system('cls')
 print('\n')
 print("      ••      ••    ••  ••••••••  ••••••••  ••••  ••••  ••••••••  ••••••••  ••••••••  ")
 print("     ••••     ••    ••     ••     ••    ••  •• •••• ••  ••        ••           ••     ")
@@ -199,7 +198,7 @@ print("    ••  ••    ••    ••     ••     ••    ••  �
 print("   ••••••••   ••    ••     ••     ••    ••  ••      ••  ••        ••           ••     ")
 print("  ••      ••  ••••••••     ••     ••••••••  ••      ••  ••••••••  ••••••••     ••     ")
 print("                   Google Meet Automater by Pavana Narayana Bhat                      ", end='\n\n')
-print("=" * 90, end='\n')
+print("-" * 90, end='\n')
 
 # Login Credentials //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 print('Google Account Login:\n---------------------', end='\n')
@@ -235,7 +234,7 @@ try:
 except WebDriverException:
     print('Please check your internet connection and try again.')
     exit_now()
-print('=' * 90, end='\n')
+print('-' * 90, end='\n')
 
 # Redirecting to Google Meet Web-Page ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 time.sleep(2)
@@ -265,7 +264,7 @@ else:
     print(end='\n')
 
     # Printing Logs/Happenings on the console
-    print('=' * 90, end='\n')
+    print('-' * 90, end='\n')
     print('Activity Logs:\n--------------', end='\n')
 
     for i in range(0, len(time_table())):
@@ -378,7 +377,6 @@ else:
             while True:
                 live_count()
                 try:
-
                     if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count)/4)) or ("Several participants left the meeting." in
                                                                                                           live_count.participant_left_notif):
                         print(f'{"                                                                "}\r', end='', flush=True)
