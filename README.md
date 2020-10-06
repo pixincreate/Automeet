@@ -69,4 +69,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Made the `Live Count` to get replaced by the `Session ended now` notification.
 - Added default dimensions to the executable. 
 - Made `Ask To Join` button to work in a more specific way by making it wait `Explicitly` and finalised the code as of now.
+- Improved icon quality.
 #
