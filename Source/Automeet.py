@@ -4,7 +4,7 @@ Content Automation for https://www.meet.google.com
 Licensed under CC0-1.0 License to Pavana Narayana Bhat
 ------------------------------------------------------------------------------------------------------------------------
 Code by: Pavana Narayana Bhat AKA PiXinCreate
-Finalised on 6 - 10 - 2020 at 5:53 PM IST
+Finalised on 7 - 10 - 2020 at 12:04 PM IST
 ------------------------------------------------------------------------------------------------------------------------
 Description:
     Selenium + Chromedriver based python script to
@@ -20,9 +20,6 @@ import sys
 import time
 import datetime as dt
 from msvcrt import getch
-
-from ctypes import windll, byref
-from ctypes.wintypes import SMALL_RECT
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -155,6 +152,18 @@ def live_count():       # Print Live count of participants
     time.sleep(1)
 
 
+def participant_left_notif():
+    try:
+        participant_left_notif.left = driver.find_element_by_class_name("aGJE1b").text
+    except NoSuchElementException:
+        pass
+    except StaleElementReferenceException:
+        try:
+            participant_left_notif.left = driver.find_element_by_class_name("aGJE1b").text
+        except NoSuchElementException:
+            pass
+
+
 def end_class():       # Ends the current session
     time.sleep(3)
     # Clicks leave call button
@@ -237,7 +246,7 @@ driver.get('https://meet.google.com')       # Redirecting to Google Meet from st
 # Automation Starts from here ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 lastClass = False
 live_count.max_count = 0
-participant_left_notif = ""
+participant_left_notif.left = ""
 true_or_false = True
 
 # Deleting the user data, i.e., taken in the beginning
@@ -252,152 +261,141 @@ if not time_table():
 
 # If classes Exist
 else:
-    try:
-        # Printing Timetable on the console
-        print("Today's timeTable:\n------------------", end='\n')
-        for sessions in time_table():
-            print(sessions[0].strftime("%I:%M %p"), end="    ")
-            print(sessions[1], end="  \n")
-        print(end='\n')
+    # Printing Timetable on the console
+    print("Today's timeTable:\n------------------", end='\n')
+    for sessions in time_table():
+        print(sessions[0].strftime("%I:%M %p"), end="    ")
+        print(sessions[1], end="  \n")
+    print(end='\n')
 
-        # Printing Logs/Happenings on the console
-        print('-' * 90, end='\n')
-        print('Activity Logs:\n--------------', end='\n')
+    # Printing Logs/Happenings on the console
+    print('-' * 90, end='\n')
+    print('Activity Logs:\n--------------', end='\n')
 
-        for i in range(0, len(time_table())):
+    for i in range(0, len(time_table())):
 
-            classTitle = time_table()[i][1].upper()
-            classTime = time_table()[i][0].strftime("%I:%M %p")
-            scheduledTimeInSeconds = int((dt.datetime.strptime(classTime, "%I:%M %p") - dt.datetime(1900, 1, 1)).total_seconds())
+        classTitle = time_table()[i][1].upper()
+        classTime = time_table()[i][0].strftime("%I:%M %p")
+        scheduledTimeInSeconds = int((dt.datetime.strptime(classTime, "%I:%M %p") - dt.datetime(1900, 1, 1)).total_seconds())
 
+        try:
+            classTimeNextSession = time_table()[i + 1][0].strftime("%I:%M %p")
+            scheduledTimeInSecondsForNextSession = int((dt.datetime.strptime(classTimeNextSession, "%I:%M %p")
+                                                        - dt.datetime(1900, 1, 1)).total_seconds())
+            if (scheduledTimeInSecondsForNextSession - present_time()) < 240:
+                classTitle = time_table()[i + 1][1].upper()
+                i += 1
+        except IndexError:
+            lastClass = True
+            driver.execute_script("alert('This is the last class for today.')")
+            time.sleep(4)
             try:
-                classTimeNextSession = time_table()[i + 1][0].strftime("%I:%M %p")
-                scheduledTimeInSecondsForNextSession = int((dt.datetime.strptime(classTimeNextSession, "%I:%M %p")
-                                                            - dt.datetime(1900, 1, 1)).total_seconds())
-                if (scheduledTimeInSecondsForNextSession - present_time()) < 240:
-                    classTitle = time_table()[i + 1][1].upper()
-                    i += 1
-            except IndexError:
-                lastClass = True
-                driver.execute_script("alert('This is the last class for today.')")
-                time.sleep(4)
-                try:
-                    driver.switch_to.alert.accept()
-                except NoAlertPresentException:
-                    pass
-
-            # Joining the class 90 seconds before the scheduled time.
-            if ((scheduledTimeInSeconds - present_time()) <= 90) or "\nNOW" in time_table()[i][2].text.upper():
-
-                print('Joining the class \"' + classTitle + '\" now...', end='    ', flush=True)
-                try:
-                    # Clicks on the specific class which is scheduled.
-                    time_table()[i][2].click()
-                except StaleElementReferenceException:
-                    stale_element_relief()
-
-            else:
-                # When waiting time to class is more than 1m 30s
-                driver.execute_script("alert('Will retry 1m 30s before the class is conducted.')")
-                time.sleep(4)
-                try:
-                    driver.switch_to.alert.accept()
-                except NoAlertPresentException:
-                    pass
-                print('Will retry 1m 30s before the class is conducted.')
-                time.sleep((scheduledTimeInSeconds - 90) - present_time())
-                print('Joining the class \"' + classTitle + '\" now...', end='    ', flush=True)
-                try:
-                    time_table()[i][2].click()
-                except StaleElementReferenceException:
-                    stale_element_relief()
-
-            # Turning Mic and Camera Off (Can be turned ON manually)
-            time.sleep(1)
-            try:
-                blockPopUp = driver.find_element_by_xpath(
-                    "/html/body/div[2]/div[3]/div/div[2]/div[2]/div[1]/div/span/span").click()
-            except NoSuchElementException:
-                pass
-            turnOffMic = driver.find_element_by_class_name("EhAUAc").find_element_by_class_name("ZB88ed").click()
-            turnOffCamera = driver.find_element_by_class_name("EhAUAc").find_element_by_class_name("GOH7Zb").click()
-            try:
-                bgBlur = driver.find_element_by_xpath(
-                    "/html/body/div[2]/c-wiz/div/div/div[5]/div[3]/div/div[2]/div/div/div[1]/div/div[6]").click()
-            except NoSuchElementException:
+                driver.switch_to.alert.accept()
+            except NoAlertPresentException:
                 pass
 
+        # Joining the class 90 seconds before the scheduled time.
+        if ((scheduledTimeInSeconds - present_time()) <= 90) or "\nNOW" in time_table()[i][2].text.upper():
+
+            print('Joining the class \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
-                # Clicks the ASK TO JOIN button
-                driver.find_element_by_xpath(
-                    "//*[@id='yDmH0d']/c-wiz/div/div/div[5]/div[3]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/span/span").click()
+                # Clicks on the specific class which is scheduled.
+                time_table()[i][2].click()
+            except StaleElementReferenceException:
+                stale_element_relief()
+
+        else:
+            # When waiting time to class is more than 1m 30s
+            driver.execute_script("alert('Will retry 1m 30s before the class is conducted.')")
+            time.sleep(4)
+            try:
+                driver.switch_to.alert.accept()
+            except NoAlertPresentException:
+                pass
+            print('Will retry 1m 30s before the class is conducted.')
+            time.sleep((scheduledTimeInSeconds - 90) - present_time())
+            print('Joining the class \"' + classTitle + '\" now...', end='    ', flush=True)
+            try:
+                time_table()[i][2].click()
+            except StaleElementReferenceException:
+                stale_element_relief()
+
+        # Turning Mic and Camera Off (Can be turned ON manually)
+        time.sleep(1)
+        try:
+            blockPopUp = driver.find_element_by_xpath(
+                "/html/body/div[2]/div[3]/div/div[2]/div[2]/div[1]/div/span/span").click()
+        except NoSuchElementException:
+            pass
+        turnOffMic = driver.find_element_by_class_name("EhAUAc").find_element_by_class_name("ZB88ed").click()
+        turnOffCamera = driver.find_element_by_class_name("EhAUAc").find_element_by_class_name("GOH7Zb").click()
+        try:
+            bgBlur = driver.find_element_by_xpath(
+                "/html/body/div[2]/c-wiz/div/div/div[5]/div[3]/div/div[2]/div/div/div[1]/div/div[6]").click()
+        except NoSuchElementException:
+            pass
+
+        try:
+            # Clicks the ASK TO JOIN button
+            driver.find_element_by_xpath(
+                "//*[@id='yDmH0d']/c-wiz/div/div/div[5]/div[3]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/span/span").click()
+            try:
+                WebDriverWait(driver, 600).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, "crqnQb"))).click()
+            except NoSuchElementException:
+                driver.refresh()
                 try:
+                    driver.execute_script("alert('Kindly ask the host to allow you in personally.')")
+                    time.sleep(3)
+                    try:
+                        driver.switch_to.alert.accept()
+                    except NoAlertPresentException:
+                        pass
+                    print('Kindly ask the host to allow you in personally.')
                     WebDriverWait(driver, 600).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, "crqnQb"))).click()
                 except NoSuchElementException:
-                    driver.refresh()
+                    driver.execute_script("alert('Please restart the Automeet once the host allows you in or continue manually \nAutomeet will "
+                                          "now exit excluding Browser Instance.')")
+                    time.sleep(3)
                     try:
-                        driver.execute_script("alert('Kindly ask the host to allow you in personally.')")
-                        time.sleep(3)
-                        try:
-                            driver.switch_to.alert.accept()
-                        except NoAlertPresentException:
-                            pass
-                        print('Kindly ask the host to allow you in personally.')
-                        WebDriverWait(driver, 600).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, "crqnQb"))).click()
-                    except NoSuchElementException:
-                        driver.execute_script("alert('Please restart the Automeet once the host allows you in or continue manually.\nAutomeet will now "
-                                              "exit excluding Browser Instance.')")
-                        time.sleep(4)
-                        try:
-                            driver.switch_to.alert.accept()
-                        except NoAlertPresentException:
-                            pass
-                        print('Please restart the Automeet once the host allows you in or continue manually.\n'
-                              'Automeet will now exit excluding Browser Instance.')
-                        exit()
+                        driver.switch_to.alert.accept()
+                    except NoAlertPresentException:
+                        pass
+                    print('Please restart the Automeet once the host allows you in or continue manually.\n'
+                          'Automeet will now exit excluding Browser Instance.')
+                    exit()
 
-            except NoSuchElementException:
-                # Clicks the JOIN NOW button
-                driver.find_element_by_class_name("l4V7wb").click()
-            except ElementClickInterceptedException:
-                time.sleep(3)
-                driver.find_element_by_class_name("l4V7wb").click()
-            print('Success.', end='\n')
+        except NoSuchElementException:
+            # Clicks the JOIN NOW button
+            driver.find_element_by_class_name("l4V7wb").click()
+        except ElementClickInterceptedException:
+            time.sleep(3)
+            driver.find_element_by_class_name("l4V7wb").click()
+        print('Success.', end='\n')
 
-            # Clicks END button if number of student count goes lesser than 1/4th of total strength.
-            # Wait for 4 minutes basically, just in order to get the number of participants increased
-            for seconds in range(0, 20):
-                live_count()
+        # Clicks END button if number of student count goes lesser than 1/4th of total strength.
+        # Wait for 4 minutes basically, just in order to get the number of participants increased
+        for seconds in range(0, 240):
+            live_count()
 
-            # Ends session when either of the condition is satisfied
-            while true_or_false:
-                live_count()
-                try:
-                    participant_left_notif = driver.find_element_by_class_name("aGJE1b").text
-                except NoSuchElementException:
-                    pass
-                except StaleElementReferenceException:
-                    participant_left_notif = driver.find_element_by_class_name("aGJE1b").text
+        # Ends session when either of the condition is satisfied
+        while true_or_false:
+            live_count()
+            try:
+                if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or ("Several participants left the meeting." in
+                                                                                                        participant_left_notif.left):
+                    print(f'{"                                                                "}\r', end='', flush=True)
+                    true_or_false = False
+                else:
+                    true_or_false = True
+            except ValueError:
+                pass
+            except AttributeError:
+                pass
 
-                try:
-                    if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or ("Several participants left the meeting." in
-                                                                                                            participant_left_notif):
-                        print(f'{"                                                                "}\r', end='', flush=True)
-                        true_or_false = False
-                    else:
-                        true_or_false = True
-                except ValueError:
-                    pass
-                except AttributeError:
-                    pass
+        end_class()
 
-            end_class()
-
-            if lastClass:
-                driver.execute_script("alert('This was the last Class for today.\nTab closes in 5 seconds.')")
-                print('\nLast class ended.\n')
-                time.sleep(5)
-                exit_now()
-    except WebDriverException:
-        print('\nBrowser unexpectedly closed by the user.\n')
-        exit_now()
+        if lastClass:
+            driver.execute_script("alert('This was the last Class for today.\nTab closes in 5 seconds.')")
+            print('\nLast class ended.\n')
+            time.sleep(5)
+            exit_now()
