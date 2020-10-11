@@ -1,3 +1,5 @@
+![Automeet Downloads](https://img.shields.io/github/downloads/pixincreate/Automeet/total?color=Blue&label=Automeet%20Downloads&logo=PiX&logoColor=Green)
+
 # **Automeet - Google Meet Automater**
 As the name says, Automeet is all about automating the process of logging **in** and **out** when attending a Meeting with a single run.
 
