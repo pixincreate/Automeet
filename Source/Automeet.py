@@ -34,6 +34,7 @@ from selenium.common.exceptions import NoAlertPresentException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.common.exceptions import JavascriptException
 
 
 # Setting console size ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -244,9 +245,10 @@ time.sleep(2)
 driver.get('https://meet.google.com')       # Redirecting to Google Meet from stackoverflow after logging in
 
 # Automation Starts from here ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# Declarations
 lastClass = False
 live_count.max_count = 0
-participant_left_notif.left = ""
+participant_left_notif.left = scheduledTimeInSeconds = classTime = classTitle = ""
 true_or_false = True
 
 # Deleting the user data, i.e., taken in the beginning
@@ -254,7 +256,7 @@ del USERNAME, PASSWORD
 
 # If no classes Exist today
 if not time_table():
-    driver.execute_script("alert(\'No classes has been scheduled for today. AutoMeet closes in 5 seconds:)\')")
+    driver.execute_script("alert('No classes has been scheduled for today. AutoMeet closes in 5 seconds:)')")
     print('No classes has been scheduled for today.', end='\n\n')
     time.sleep(3)
     exit_now()
@@ -273,10 +275,12 @@ else:
     print('Activity Logs:\n--------------', end='\n')
 
     for i in range(0, len(time_table())):
-
-        classTitle = time_table()[i][1].upper()
-        classTime = time_table()[i][0].strftime("%I:%M %p")
-        scheduledTimeInSeconds = int((dt.datetime.strptime(classTime, "%I:%M %p") - dt.datetime(1900, 1, 1)).total_seconds())
+        try:
+            classTitle = time_table()[i][1].upper()
+            classTime = time_table()[i][0].strftime("%I:%M %p")
+            scheduledTimeInSeconds = int((dt.datetime.strptime(classTime, "%I:%M %p") - dt.datetime(1900, 1, 1)).total_seconds())
+        except IndexError:
+            lastClass = True
 
         try:
             classTimeNextSession = time_table()[i + 1][0].strftime("%I:%M %p")
@@ -353,7 +357,7 @@ else:
                     print('Kindly ask the host to allow you in personally.')
                     WebDriverWait(driver, 600).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, "crqnQb"))).click()
                 except NoSuchElementException:
-                    driver.execute_script("alert('Please restart the Automeet once the host allows you in or continue manually \nAutomeet will "
+                    driver.execute_script("alert('Please restart the Automeet once the host allows you in or continue manually. Automeet will "
                                           "now exit excluding Browser Instance.')")
                     time.sleep(3)
                     try:
@@ -395,7 +399,10 @@ else:
         end_class()
 
         if lastClass:
-            driver.execute_script("alert('This was the last Class for today.\nTab closes in 5 seconds.')")
+            try:
+                driver.execute_script("alert('This was the last Class for today. Tab closes in 5 seconds.')")
+            except JavascriptException:
+                pass
             print('\nLast class ended.\n')
             time.sleep(5)
             exit_now()
