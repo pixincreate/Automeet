@@ -1,8 +1,3 @@
-
-
-
-
-
 # **Automeet**
 ![Automeet Downloads](https://img.shields.io/github/downloads/pixincreate/Automeet/total?color=Blue&label=Automeet%20Downloads&logo=PiXinCreate&logoColor=Blue&style=for-the-badge)
 
@@ -77,5 +72,6 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Made the `Live Count` to get replaced by the `Session ended now` notification.
 - Added default dimensions to the executable. 
 - Made `Ask To Join` button to work in a more specific way by making it wait `Explicitly` and finalised the code as of now.
-- Improved icon quality.
+- Increased icon quality.
+- Added some Exception Handlers to handle errors(especially `IndexError` and `JavascriptError`) that occurred due to bad practices followed by the host.
 #
