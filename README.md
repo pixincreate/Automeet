@@ -1,5 +1,6 @@
 # **Automeet**
 ![Automeet Downloads](https://img.shields.io/github/downloads/pixincreate/Automeet/total?color=Blue&label=Automeet%20Downloads&logo=PiXinCreate&logoColor=Blue&style=for-the-badge)
+![APK Downloads](https://img.shields.io/badge/dynamic/json?color=green&label=Automeet%20Downloads&query=Automeet&url=https%3A%2F%2Fraw.githubusercontent.com%2Fpixincreate%2FAutomeet%2Fcount%2Fcount.json&cacheSeconds=1300)
 
 ### Introduction:
 As the name says, Automeet is all about automating the process of logging **in** and **out** when attending a Meeting on Google Meet platform with a single run. Automeet is mainly targeted for the employees and Students out there to help them out manage their time which is basically wasted in waiting to attend sessions and clickings!
