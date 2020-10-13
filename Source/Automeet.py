@@ -4,7 +4,6 @@ Content Automation for https://www.meet.google.com
 Licensed under CC0-1.0 License to Pavana Narayana Bhat
 ------------------------------------------------------------------------------------------------------------------------
 Code by: Pavana Narayana Bhat AKA PiXinCreate
-Finalised on 7 - 10 - 2020 at 12:04 PM IST
 ------------------------------------------------------------------------------------------------------------------------
 Description:
     Selenium + Chromedriver based python script to
