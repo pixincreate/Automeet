@@ -148,7 +148,7 @@ def live_count():       # Print Live count of participants
     if int(live_count.number_of_participants) > live_count.max_count:
         live_count.max_count = int(live_count.number_of_participants)
 
-    print(f'{"Live count of participants: " + live_count.number_of_participants}\r', end='', flush=True)
+    print(f'{"Live count of participants: " + live_count.number_of_participants + " "}\r', end='', flush=True)
     time.sleep(1)
 
 
@@ -169,14 +169,17 @@ def end_class():       # Ends the current session
     # Clicks leave call button
     leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
     try:
-        leave_call.driver.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[4]/div[3]/div[9]/div[2]/div[2]/div").click()
+        leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[9]/div[2]/div[2]/div").click()
     except ElementNotInteractableException:
         driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
-        leave_call.driver.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[4]/div[3]/div[9]/div[2]/div[2]/div").click()
+        driver.implicitly_wait(2)
+        leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[9]/div[2]/div[2]/div").click()
     except NoSuchElementException:
         driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
-        leave_call.driver.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[4]/div[3]/div[9]/div[2]/div[2]/div").click()
-    print(f'{"The class " + classTitle + " ended now.                                     "}\r', end='')
+        driver.implicitly_wait(2)
+        leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[9]/div[2]/div[2]/div").click()
+
+    print(f'{"The class " + classTitle + " ended now.                                     "}\r', end='', flush=True)
     print(end='\n\n')
     live_count.max_count = 0
     time.sleep(3)
@@ -206,8 +209,8 @@ print("-" * 90, end='\n')
 
 # Login Credentials //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 print('Google Account Login:\n---------------------', end='\n')
-USERNAME = input("User Name : ")
-PASSWORD = white_password(prompt="Password  : ")
+USERNAME = 'pavananarayana01' #input("User Name : ")
+PASSWORD = 'P!*@NB0rN@200.1' #white_password(prompt="Password  : ")
 
 # Assigning Drivers //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 options = Options()
@@ -249,6 +252,7 @@ driver.get('https://meet.google.com')       # Redirecting to Google Meet from st
 lastClass = False
 live_count.max_count = 0
 participant_left_notif.left = scheduledTimeInSeconds = classTime = classTitle = ""
+global cond
 
 # Deleting the user data, i.e., taken in the beginning
 del USERNAME, PASSWORD
@@ -338,9 +342,13 @@ else:
             pass
 
         try:
+            # Clicks the JOIN NOW button
+            driver.find_element_by_class_name("l4V7wb").click()
+        except ElementClickInterceptedException:
+            time.sleep(3)
+            driver.find_element_by_class_name("l4V7wb").click()
+        except NoSuchElementException:
             # Clicks the ASK TO JOIN button
-            driver.find_element_by_xpath(
-                "//*[@id='yDmH0d']/c-wiz/div/div/div[5]/div[3]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/span/span").click()
             try:
                 WebDriverWait(driver, 600).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, "crqnQb"))).click()
             except TimeoutException:
@@ -365,39 +373,28 @@ else:
                     print('Please restart the Automeet once the host allows you in or continue manually.\n'
                           'Automeet will now exit excluding Browser Instance.')
                     exit()
-
-        except NoSuchElementException:
-            # Clicks the JOIN NOW button
-            driver.find_element_by_class_name("l4V7wb").click()
-        except ElementClickInterceptedException:
-            time.sleep(3)
-            driver.find_element_by_class_name("l4V7wb").click()
         print('Success.', end='\n')
 
         # Clicks END button if number of student count goes lesser than 1/4th of total strength.
         # Wait for 4 minutes basically, just in order to get the number of participants increased
-        try:
-            for seconds in range(0, 240):
-                live_count()
+        for seconds in range(0, 240):
+            live_count()
 
-            # Ends session when either of the condition is satisfied
-            while True:
-                live_count()
-                try:
-                    if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or ("Several participants left the meeting."
-                                                                                                            in participant_left_notif.left):
-                        end_class()
-                        break
-                    else:
-                        pass
-                except ValueError:
-                    pass
-                except AttributeError:
-                    pass
-        except WebDriverException as e:
-            if "chrome not reachable" in e:
-                print("\nBrowser unexpectedly closed by the user.\n")
-                exit()
+        # Ends session when either of the condition is satisfied
+        cond = True
+        while cond:
+            live_count()
+            try:
+                if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or ("Several participants left the meeting."
+                                                                                                        in participant_left_notif.left):
+                    end_class()
+                    cond = False
+                else:
+                    cond = True
+            except ValueError:
+                pass
+            except AttributeError:
+                pass
 
         if lastClass:
             try:
