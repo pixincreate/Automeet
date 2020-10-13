@@ -133,15 +133,15 @@ def stale_element_relief():       # Refreshing DOM. It waits for the element to 
     time_table()
     time.sleep(4)
     ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
-    join = WebDriverWait(driver, 5, ignored_exceptions=ignored_exceptions) \
+    join = WebDriverWait(driver, 60, ignored_exceptions=ignored_exceptions) \
         .until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "wKIIs")))
     join.click()
 
 
 def live_count():       # Print Live count of participants
-    driver.implicitly_wait(3)
-
+    driver.implicitly_wait(5)
     live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
+
     if live_count.number_of_participants == '':
         live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip('()')
 
@@ -149,7 +149,6 @@ def live_count():       # Print Live count of participants
         live_count.max_count = int(live_count.number_of_participants)
 
     print(f'{"Live count of participants: " + live_count.number_of_participants}\r', end='', flush=True)
-
     time.sleep(1)
 
 
@@ -170,14 +169,14 @@ def end_class():       # Ends the current session
     # Clicks leave call button
     leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
     try:
-        leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[4]/div[3]/div[9]/div[2]/div[2]/div").click()
+        leave_call.driver.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[4]/div[3]/div[9]/div[2]/div[2]/div").click()
     except ElementNotInteractableException:
         driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
-        leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[9]/div[2]/div[2]/div").click()
+        leave_call.driver.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[4]/div[3]/div[9]/div[2]/div[2]/div").click()
     except NoSuchElementException:
         driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
-        leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[9]/div[2]/div[2]/div").click()
-    print(f'{"The class " + classTitle + " ended now.                                "}\r', end='')
+        leave_call.driver.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[4]/div[3]/div[9]/div[2]/div[2]/div").click()
+    print(f'{"The class " + classTitle + " ended now.                                     "}\r', end='')
     print(end='\n\n')
     live_count.max_count = 0
     time.sleep(3)
@@ -250,7 +249,6 @@ driver.get('https://meet.google.com')       # Redirecting to Google Meet from st
 lastClass = False
 live_count.max_count = 0
 participant_left_notif.left = scheduledTimeInSeconds = classTime = classTitle = ""
-true_or_false = True
 
 # Deleting the user data, i.e., taken in the beginning
 del USERNAME, PASSWORD
@@ -328,8 +326,7 @@ else:
         # Turning Mic and Camera Off (Can be turned ON manually)
         time.sleep(1)
         try:
-            blockPopUp = driver.find_element_by_xpath(
-                "/html/body/div[2]/div[3]/div/div[2]/div[2]/div[1]/div/span/span").click()
+            blockPopUp = driver.find_element_by_xpath("/html/body/div[2]/div[3]/div/div[2]/div[2]/div[1]/div/span/span").click()
         except NoSuchElementException:
             pass
         turnOffMic = driver.find_element_by_class_name("EhAUAc").find_element_by_class_name("ZB88ed").click()
@@ -346,7 +343,7 @@ else:
                 "//*[@id='yDmH0d']/c-wiz/div/div/div[5]/div[3]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/span/span").click()
             try:
                 WebDriverWait(driver, 600).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, "crqnQb"))).click()
-            except NoSuchElementException:
+            except TimeoutException:
                 driver.refresh()
                 try:
                     driver.execute_script("alert('Kindly ask the host to allow you in personally.')")
@@ -357,7 +354,7 @@ else:
                         pass
                     print('Kindly ask the host to allow you in personally.')
                     WebDriverWait(driver, 600).until(expected_conditions.element_to_be_clickable((By.CLASS_NAME, "crqnQb"))).click()
-                except NoSuchElementException:
+                except TimeoutException:
                     driver.execute_script("alert('Please restart the Automeet once the host allows you in or continue manually. Automeet will "
                                           "now exit excluding Browser Instance.')")
                     time.sleep(3)
@@ -379,23 +376,28 @@ else:
 
         # Clicks END button if number of student count goes lesser than 1/4th of total strength.
         # Wait for 4 minutes basically, just in order to get the number of participants increased
-        for seconds in range(0, 300):
-            live_count()
+        try:
+            for seconds in range(0, 240):
+                live_count()
 
-        # Ends session when either of the condition is satisfied
-        while true_or_false:
-            live_count()
-            try:
-                if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or ("Several participants left the meeting." in
-                                                                                                        participant_left_notif.left):
-                    true_or_false = False
-                    end_class()
-                else:
-                    true_or_false = True
-            except ValueError:
-                pass
-            except AttributeError:
-                pass
+            # Ends session when either of the condition is satisfied
+            while True:
+                live_count()
+                try:
+                    if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or ("Several participants left the meeting."
+                                                                                                            in participant_left_notif.left):
+                        end_class()
+                        break
+                    else:
+                        pass
+                except ValueError:
+                    pass
+                except AttributeError:
+                    pass
+        except WebDriverException as e:
+            if "chrome not reachable" in e:
+                print("\nBrowser unexpectedly closed by the user.\n")
+                exit()
 
         if lastClass:
             try:
