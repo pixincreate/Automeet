@@ -29,7 +29,7 @@ As the name says, Automeet is all about automating the process of logging **in**
 - If the meeting is not yet started, it will wait till 1m 30s before the scheduled time.
 - When participants' count **reduces** to/below the **1/4th** of the total strength **or** if *```"Several participants left the meeting."```* notification arrives in the meeting when going on, **Automeet** will end the call, and waits for/joins the next one.
 - Incase you join the meeting 5 minutes before the next scheduled meeting, it will directly join you for that instead of the previous one.
-- `.exe` has been created using *(pyinstaller)[https://pypi.org/project/pyinstaller/]*
+- `.exe` has been created using *[pyinstaller](https://pypi.org/project/pyinstaller/)*
 
 ### Found any bugs?
 Incase you find any bugs, please raise an *[Issue Ticket](https://github.com/pixincreate/Automeet/issues/new/choose)* under the *[Issues Tab](https://github.com/pixincreate/Automeet/issues)* of this Repository. Will look into it, then solve the issue if it exist.
