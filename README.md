@@ -56,7 +56,7 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 
 © PiXinCreate All rigths reserved.
 #
-## Change Logs:
+## Change Logs based on the commits to the Source:
 - Initial Release.
 - Fixed ```IndexError```, ```NoSuchElementException``` that used to appear in common for no reasons.
 - Some Console CLI changes to interact with user.
@@ -73,4 +73,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Made `Ask To Join` button to work in a more specific way by making it wait `Explicitly` and finalised the code as of now.
 - Increased icon quality.
 - Added some Exception Handlers to handle errors(especially `IndexError` and `JavascriptError`) that occurred due to bad practices followed by the host.
+- Fixed the unexpected endings of `Sessions` after the first one.
 #
