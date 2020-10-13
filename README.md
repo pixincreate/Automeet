@@ -33,7 +33,7 @@ As the name says, Automeet is all about automating the process of logging **in**
 ### Found any bugs?
 Incase you find any bugs, please raise an *[Issue Ticket](https://github.com/pixincreate/Online-Class-Automater/issues/new)* under the *[Issues Tab](https://github.com/pixincreate/Online-Class-Automater/issues)* of this Repository. Will look into it, then solve the issue if it exist.
 
-**Note:**  A **Warning** exists in both the .py files. To learn why the warning exists, click *[here](https://stackoverflow.com/questions/63958561/how-to-merge-chromedriver-exe-with-a-python-script-that-runs-on-selenium-webdriv/63959432#63959432)*.
+**Note:**  A **Warning** exists in both the .py files. To learn more about the warning, click *[here](https://stackoverflow.com/questions/63958561/how-to-merge-chromedriver-exe-with-a-python-script-that-runs-on-selenium-webdriv/63959432#63959432)*.
 
 ### FAQ:
 *Q*: **Why _Automeet_ is SLOW at Start up**?
