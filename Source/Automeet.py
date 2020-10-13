@@ -177,8 +177,9 @@ def end_class():       # Ends the current session
     except NoSuchElementException:
         driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
         leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[9]/div[2]/div[2]/div").click()
-
-    print('The class ' + classTitle + ' ended now.', end='\n')
+    print(f'{"The class " + classTitle + " ended now.                                "}\r', end='')
+    print(end='\n\n')
+    live_count.max_count = 0
     time.sleep(3)
     # Returns to the Home Screen
     driver.get('https://meet.google.com/')
@@ -378,7 +379,7 @@ else:
 
         # Clicks END button if number of student count goes lesser than 1/4th of total strength.
         # Wait for 4 minutes basically, just in order to get the number of participants increased
-        for seconds in range(0, 240):
+        for seconds in range(0, 300):
             live_count()
 
         # Ends session when either of the condition is satisfied
@@ -387,16 +388,14 @@ else:
             try:
                 if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or ("Several participants left the meeting." in
                                                                                                         participant_left_notif.left):
-                    print(f'{"                                                                "}\r', end='', flush=True)
                     true_or_false = False
+                    end_class()
                 else:
                     true_or_false = True
             except ValueError:
                 pass
             except AttributeError:
                 pass
-
-        end_class()
 
         if lastClass:
             try:
