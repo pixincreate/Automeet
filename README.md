@@ -52,7 +52,7 @@ This project comes under CC0-1.0 License copyrighted to *(C) Pavana Narayana Bha
 I ask you nothing but a **Like** and **[Subscribe](https://www.youtube.com/c/pixincreate/subscribe)** to my **YouTube** channel **[*PiXinCreate*](https://www.youtube.com/c/pixincreate)** followed by **hitting BELL icon** *once*, incase if you haven't already.
 
 ### About me:
-I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube. I make videos related to Photo editing where I teach my fellow viewers to edit photos on their own to the extinct I know. I'm a Privacy Centered tech enthusiast. You can find me on: Instagram, Facebook, YouTube, Twitter @pixincreate is the userName. See you there.:)
+I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube. I make videos related to Photo editing where I teach my fellow viewers to edit photos on their own to the extinct I know. I'm a Privacy Centered tech enthusiast. You can find me on: Instagram, Facebook, YouTube, Twitter **`@pixincreate`** is the userName. See you there.:)
 
 © PiXinCreate All rigths reserved.
 #
