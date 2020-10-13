@@ -13,7 +13,7 @@ As the name says, Automeet is all about automating the process of logging **in**
 - **Stable Internet** connection.
 
 ### Usage:
-- Once the **PreRequisites** is satisfied, you're almost done. **Download** the executable from the *[releases section](https://github.com/pixincreate/Automeet/releases/tag/v0.2.0)*.
+- Once the **PreRequisites** is satisfied, you're almost done. **Download** the executable from the *[releases section](https://github.com/pixincreate/Automeet/releases)*.
 - Run the **Automeet.exe**.
 - Enter your **Google Account Login Credentials** that you used to join your online meetings.
 - Chill all day long watching the automation.
@@ -31,7 +31,7 @@ As the name says, Automeet is all about automating the process of logging **in**
 - Incase you join the meeting 5 minutes before the next scheduled meeting, it will directly join you for that instead of the previous one.
 
 ### Found any bugs?
-Incase you find any bugs, please raise an *[Issue Ticket](https://github.com/pixincreate/Online-Class-Automater/issues/new)* under the *[Issues Tab](https://github.com/pixincreate/Online-Class-Automater/issues)* of this Repository. Will look into it, then solve the issue if it exist.
+Incase you find any bugs, please raise an *[Issue Ticket](https://github.com/pixincreate/Automeet/issues/new/choose)* under the *[Issues Tab](https://github.com/pixincreate/Automeet/issues)* of this Repository. Will look into it, then solve the issue if it exist.
 
 **Note:**  A **Warning** exists in both the .py files. To learn more about the warning, click *[here](https://stackoverflow.com/questions/63958561/how-to-merge-chromedriver-exe-with-a-python-script-that-runs-on-selenium-webdriv/63959432#63959432)*.
 
