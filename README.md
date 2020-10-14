@@ -1,5 +1,5 @@
 # **Automeet**
-![Automeet Downloads](https://img.shields.io/github/downloads/pixincreate/Automeet/total?color=Blue&label=Automeet%20Downloads&logo=PiXinCreate&logoColor=Blue&style=for-the-badge)
+![Automeet Downloads](https://img.shields.io/github/downloads/pixincreate/Automeet/total?color=Blue&label=Automeet%20Downloads&logo=PiXinCreate&logoColor=Blue&style=for-the-badge)  
 **_[LATEST RELEASE](https://github.com/pixincreate/Automeet/releases/latest)_**
 
 ### Introduction:
