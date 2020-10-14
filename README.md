@@ -74,4 +74,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Increased icon quality.
 - Added some Exception Handlers to handle errors(especially `IndexError` and `JavascriptError`) that occurred due to bad practices followed by the host.
 - Fixed the unexpected endings of `Sessions` after the first one.
+- Removed unnecessary 240 iterations and some minor tweaks to pop-up notifications on the browser instance.
 #
