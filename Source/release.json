@@ -1,5 +1,6 @@
-"automeet": {
-    "versionCode": "0.3.5",
+{
+  "automeet": {
+    "version": "0.3.5",
     "link": "https://github.com/pixincreate/Automeet/releases"
   }
 }
