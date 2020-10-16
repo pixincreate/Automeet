@@ -81,4 +81,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Fixed the unexpected endings of `Sessions` after the first one.
 - Removed unnecessary 240 iterations and some minor tweaks to pop-up notifications on the browser instance.
 - Add supoort for Firefox web browsers - 32 bit, 64 bit.
+- Add condition to end session when recording stops(if it was recording before).
 #
