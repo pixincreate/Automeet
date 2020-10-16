@@ -161,12 +161,18 @@ def live_count():       # Print Live count of participants
             live_count.left = driver.find_element_by_class_name("aGJE1b").text
         except NoSuchElementException:
             pass
-    """
-    # Check for stop record to end meeting
-    live_count.rec_button = driver.find_element_by_class_name("F9AaL").find_element_by_class_name("KHSqkf")
-    live_count.rec_stop = driver.find_element_by_class_name("aGJE1b")
-    """
 
+    # Check for stop record to end meeting
+    try:
+        live_count.rec_stop = driver.find_element_by_class_name("aGJE1b").text
+    except NoSuchElementException:
+        pass
+    except StaleElementReferenceException:
+        try:
+            live_count.rec_stop = driver.find_element_by_class_name("aGJE1b").text
+        except NoSuchElementException:
+            pass
+        
 
 def end_class():       # Ends the current session
     time.sleep(3)
@@ -232,10 +238,10 @@ options.add_experimental_option("prefs",
                                  "profile.default_content_setting_values.notifications": 2})
 try:
     try:
-        # For 64 Bit
+        # For 64 Bit Brave
         options.binary_location = "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
     except WebDriverException:
-        # For 32 Bit
+        # For 32 Bit Brave
         options.binary_location = "C:\\Program Files (x86)\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
     driver = webdriver.Chrome(options=options, executable_path=resource_path(driverPath))
 
@@ -244,8 +250,10 @@ except WebDriverException:
         driver = webdriver.Chrome(resource_path(driverPath), options=options)
     except WebDriverException:
         try:
+            # For 64 Bit Firefox
             driver = webdriver.Firefox(executable_path=driverPathF64)
         except WebDriverException:
+            # For 32 Bit Firefox
             driver = webdriver.Firefox(executable_path=driverPathF32)
 
 # Logging in /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,7 +272,7 @@ driver.get('https://meet.google.com')       # Redirecting to Google Meet from st
 # Declarations
 lastClass = False
 live_count.max_count = 0
-live_count.left = live_count.rec_stop = scheduledTimeInSeconds = classTime = classTitle = ""
+live_count.left = live_count.rec_stop = live_count.rec_button = scheduledTimeInSeconds = classTime = classTitle = ""
 global cond
 
 # Deleting the user data, i.e., taken in the beginning
@@ -404,7 +412,8 @@ else:
             live_count()
             try:
                 if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or\
-                        ("Several participants left the meeting." in live_count.left):  # or ("stopped recording" in live_count.rec_stop):
+                        ("Several participants left the meeting." in live_count.left) or\
+                        ("has stopped recording." in live_count.rec_stop):
                     end_class()
                     cond = False
                 else:
