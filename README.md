@@ -46,6 +46,10 @@ Incase you find any bugs, please raise an *[Issue Ticket](https://github.com/pix
 *Q*: **How do I create the EXECUTABLES**?  
 *A*: `.exe` has been created using *[pyinstaller](https://pypi.org/project/pyinstaller/)*.
 
+### Feature updates(that I'm currently thinking to Add):
+- Auto attendance (for students) that puts Present Sir/ Mam on behalf of you.
+- Exit meetings based on Recording of sessions.
+
 ### LICENSE:
 This project comes under CC0-1.0 License copyrighted to *(C) Pavana Narayana Bhat*. Click *[here](https://github.com/pixincreate/Online-Class-Automater/blob/master/LICENSE)* to learn more about the permissions offered by this license.
 
@@ -76,4 +80,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Added some Exception Handlers to handle errors(especially `IndexError` and `JavascriptError`) that occurred due to bad practices followed by the host.
 - Fixed the unexpected endings of `Sessions` after the first one.
 - Removed unnecessary 240 iterations and some minor tweaks to pop-up notifications on the browser instance.
+- Add supoort for Firefox web browsers - 32 bit, 64 bit.
 #
