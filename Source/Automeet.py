@@ -151,8 +151,9 @@ def live_count():       # Print Live count of participants
     print(f'{"Live count of participants: " + live_count.number_of_participants + " "}\r', end='', flush=True)       # Prints the live count
     time.sleep(1)
 
+    # Several Participants left the meeting.
     try:
-        live_count.left = driver.find_element_by_class_name("aGJE1b").text       # Several Participants left the meeting. notif
+        live_count.left = driver.find_element_by_class_name("aGJE1b").text
     except NoSuchElementException:
         pass
     except StaleElementReferenceException:
@@ -160,6 +161,11 @@ def live_count():       # Print Live count of participants
             live_count.left = driver.find_element_by_class_name("aGJE1b").text
         except NoSuchElementException:
             pass
+    """
+    # Check for stop record to end meeting
+    live_count.rec_button = driver.find_element_by_class_name("F9AaL").find_element_by_class_name("KHSqkf")
+    live_count.rec_stop = driver.find_element_by_class_name("aGJE1b")
+    """
 
 
 def end_class():       # Ends the current session
@@ -214,6 +220,8 @@ PASSWORD = white_password(prompt="Password  : ")
 options = Options()
 options.add_argument("start-maximized")
 driverPath = './driver/chromedriver.exe'
+driverPathF64 = './driver/geckodriver-64'
+driverPathF32 = './driver/geckodriver-32'
 
 # 1 to allow permissions and 2 to block them
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -230,8 +238,15 @@ try:
         # For 32 Bit
         options.binary_location = "C:\\Program Files (x86)\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
     driver = webdriver.Chrome(options=options, executable_path=resource_path(driverPath))
+
 except WebDriverException:
-    driver = webdriver.Chrome(resource_path(driverPath), options=options)
+    try:
+        driver = webdriver.Chrome(resource_path(driverPath), options=options)
+    except WebDriverException:
+        try:
+            driver = webdriver.Firefox(executable_path=driverPathF64)
+        except WebDriverException:
+            driver = webdriver.Firefox(executable_path=driverPathF32)
 
 # Logging in /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 try:
@@ -249,7 +264,7 @@ driver.get('https://meet.google.com')       # Redirecting to Google Meet from st
 # Declarations
 lastClass = False
 live_count.max_count = 0
-live_count.left = scheduledTimeInSeconds = classTime = classTitle = ""
+live_count.left = live_count.rec_stop = scheduledTimeInSeconds = classTime = classTitle = ""
 global cond
 
 # Deleting the user data, i.e., taken in the beginning
@@ -388,8 +403,8 @@ else:
         while cond:
             live_count()
             try:
-                if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or ("Several participants left the meeting." in
-                                                                                                        live_count.left):
+                if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or\
+                        ("Several participants left the meeting." in live_count.left):  # or ("stopped recording" in live_count.rec_stop):
                     end_class()
                     cond = False
                 else:
