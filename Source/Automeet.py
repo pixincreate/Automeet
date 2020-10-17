@@ -172,7 +172,7 @@ def live_count():       # Print Live count of participants
             live_count.rec_stop = driver.find_element_by_class_name("aGJE1b").text
         except NoSuchElementException:
             pass
-        
+
 
 def end_class():       # Ends the current session
     time.sleep(3)
@@ -247,7 +247,7 @@ try:
 
 except WebDriverException:
     try:
-        driver = webdriver.Chrome(resource_path(driverPath), options=options)
+        driver = webdriver.Chrome(executable_path=resource_path(driverPath), options=options)
     except WebDriverException:
         try:
             # For 64 Bit Firefox
@@ -413,7 +413,7 @@ else:
             try:
                 if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or\
                         ("Several participants left the meeting." in live_count.left) or\
-                        ("has stopped recording." in live_count.rec_stop):
+                        ("stopped recording" in live_count.rec_stop):
                     end_class()
                     cond = False
                 else:
