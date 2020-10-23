@@ -28,7 +28,7 @@ As the name says, Automeet is all about automating the process of logging **in**
 - On logging in to your Google Account, **Automeet** will fetch the day's **scheduled meetings**.
 - Then updates them in the console for you with timings.
 - If the meeting is not yet started, it will wait till 1m 30s before the scheduled time.
-- When participants' count **reduces** to/below the **1/4th** of the total strength **or** if *```"Several participants left the meeting."/ "User_name stopped recording"```* notification arrives in the meeting when going on, **Automeet** will end the call, and waits for/joins the next one.
+- When participants' count **reduces** to/below the **1/4th** of the total strength **or** if *```"Several participants left the meeting."/ "stopped recording"```* notification arrives in the meeting when going on, **Automeet** will end the call, and waits for/joins the next one.
 - Incase you join the meeting 5 minutes before the next scheduled meeting, it will directly join you for that instead of the previous one.
 
 ### Found any bugs?
@@ -82,4 +82,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Removed unnecessary 240 iterations and some minor tweaks to pop-up notifications on the browser instance.
 - Add supoort for Firefox web browsers - 32 bit, 64 bit.
 - Add condition to end session when recording stops(if it was recording before).
+- Fix sudden ending of meetings from ```session - 2``` and minor console UI changes.
 #
