@@ -75,11 +75,12 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Some extra exceptions added through Testing.
 - Made the `Live Count` to get replaced by the `Session ended now` notification.
 - Added default dimensions to the executable. 
-- Made `Ask To Join` button to work in a more specific way by making it wait `Explicitly` and finalised the code as of now.(fixes needed)
+- Made `Ask To Join` button to work in a more specific way by making it wait `Explicitly`.(fixes needed)
 - Increased icon quality.
 - Added some Exception Handlers to handle errors(especially `IndexError` and `JavascriptError`) that occurred due to bad practices followed by the host.
 - Removed unnecessary 240 iterations and some minor tweaks to pop-up notifications on the browser instance.
 - Add supoort for Firefox web browsers - 32 bit, 64 bit(theoritically).
 - Add condition to end session when recording stops(if it was recording before).
 - Fix sudden ending of meetings from ```session - 2``` and minor console UI changes.
+- Fixed for `Ask to join` button that didn't use to do it's work properly.
 #
