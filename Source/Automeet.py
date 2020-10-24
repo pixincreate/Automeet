@@ -177,7 +177,7 @@ def live_count():       # Print Live count of participants
             except NoSuchElementException:
                 pass
     except NoSuchElementException:
-        print('Please check your internet connection nad try again.\n')
+        print('Please check your internet connection and try again.\n')
         exit_now()
 
 
@@ -364,32 +364,37 @@ else:
         except NoSuchElementException:
             pass
 
-        try:
-            # Clicks the JOIN NOW button
-            driver.find_element_by_class_name("l4V7wb").click()
-        except ElementClickInterceptedException:
-            time.sleep(3)
-            driver.find_element_by_class_name("l4V7wb").click()
-        except NoSuchElementException:
-            # Clicks the ASK TO JOIN button
+        # Clicks the JOIN NOW button
+        JoinNow = driver.find_element_by_class_name("NPEfkd")
+        if "Join now" in JoinNow.text:
             try:
-                driver.find_element_by_class_name("crqnQb").click()
-                WebDriverWait(driver, 600).until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "EIlDfe")))
-            except TimeoutException:
-                driver.refresh()
-                try:
-                    print('Kindly ask the host to allow you in personally.')
-                    driver.execute_script("alert('Kindly ask the host to allow you in personally.')")
-                    auto_close_popup_message()
-                    driver.find_element_by_class_name("crqnQb").click()
-                    WebDriverWait(driver, 600).until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "EIlDfe")))
-                except TimeoutException:
-                    driver.execute_script("alert('Please restart the Automeet once the host allows you in or continue manually. Automeet will "
-                                          "now exit.')")
-                    auto_close_popup_message()
-                    print('Please restart the Automeet once the host allows you in or continue manually.\n'
-                          'Automeet will now exit excluding Browser Instance.')
-                    exit_now()
+                JoinNow.click()
+            except ElementClickInterceptedException:
+                time.sleep(3)
+                JoinNow.click()
+            except NoSuchElementException:
+                # Clicks the ASK TO JOIN button
+                AskToJoin = driver.find_element_by_xpath("//div[@role='button']//span[contains(text(), 'Ask to join')]")
+                if "Ask to join" in AskToJoin.text:
+                    try:
+                        AskToJoin.click()
+                        WebDriverWait(driver, 600).until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "kPEoYc GOJTSe")))
+                    except TimeoutException:
+                        driver.refresh()
+                        try:
+                            AskToJoin.click()
+                            print('Kindly ask the host to allow you in.')
+                            driver.execute_script("alert('Kindly ask the host to allow you in.')")
+                            auto_close_popup_message()
+                            AskToJoin.click()
+                            WebDriverWait(driver, 596).until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "kPEoYc GOJTSe")))
+                        except TimeoutException:
+                            driver.execute_script("alert('Please restart the Automeet and ask the host to allow you in."
+                                                  "Automeet will now exit.')")
+                            auto_close_popup_message()
+                            print('Please restart the Automeet and ask the host to allow you in.\n'
+                                  'Automeet will now exit.')
+                            exit_now()
         print('Success.', end='\n')
 
         # Clicks END button if conditions are satisfied.
