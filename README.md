@@ -22,7 +22,7 @@ As the name says, Automeet is all about automating the process of logging **in**
 ### Things to keep in mind:
 - Please make sure that the Google Meet meetings are scheduled on your Google Calendar and the timings doesnot overlap with each other(like 2 meetings at the same time             or whatever).
 - Also, do note that the **Password** that you enter is not visible(neither in ```*```), instead you'll see nothing but empty space.
-- User will get an error stating **```valueError```** when a user interferes at the time of Auromation. Just re-run the **Automeet**.
+- User will get an error stating **```valueError```** when a user interferes at the time of Automation. Just re-run the **Automeet**.
 
 ### Working:
 - On logging in to your Google Account, **Automeet** will fetch the day's **scheduled meetings**.
