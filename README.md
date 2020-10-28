@@ -46,8 +46,10 @@ Incase you find any bugs, please raise an *[Issue Ticket](https://github.com/pix
 *Q*: **How do I create the EXECUTABLES**?  
 *A*: `.exe` has been created using *[pyinstaller](https://pypi.org/project/pyinstaller/)*.
 
-### Feature updates(that I'm currently thinking to Add):
-- Auto attendance (for students) that puts Present Sir/ Mam on behalf of you.
+### Feature updates(will be added - Online classes continues to to be conducted everywhere):
+- Auto attendance (for students) that puts Present Sir / Mam on behalf of you.
+- Make the UI interactable by replacing CLI with GUI.
+- Add option for placing Meet links along with the Calendar scheduled links in meet homepage with the help of GUI.(Major update)
 
 ### LICENSE:
 This project comes under CC0-1.0 License copyrighted to *(C) Pavana Narayana Bhat*. Click *[here](https://github.com/pixincreate/Online-Class-Automater/blob/master/LICENSE)* to learn more about the permissions offered by this license.
