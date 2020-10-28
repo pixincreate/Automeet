@@ -1,4 +1,4 @@
-# Automeet
+# Automeet - Google Meet Meetings Automater!
 ![Automeet Downloads](https://img.shields.io/github/downloads/pixincreate/Automeet/total?color=Blue&label=Automeet%20Downloads&logo=PiXinCreate&logoColor=Blue&style=for-the-badge)  
 To download the **lastest** release, click **_[here](https://github.com/pixincreate/Automeet/releases/latest)_**.
 
