@@ -79,7 +79,7 @@ def login(username, password):       # Logs in the user
 
     driver.find_element_by_name("identifier").send_keys(username)
     WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, "//*[@id='identifierNext']/div/button/div[2]"))).click()
-    driver.implicitly_wait(4)
+    driver.implicitly_wait(10)
 
     try:
         driver.find_element_by_name("password").send_keys(password)
@@ -93,7 +93,7 @@ def login(username, password):       # Logs in the user
         del username, password
         exit_now()
     try:
-        WebDriverWait(driver, 5).until(lambda webpage: "https://stackoverflow.com/" in webpage.current_url)
+        WebDriverWait(driver, 60).until(lambda webpage: "https://stackoverflow.com/" in webpage.current_url)
         print('\nLogin Successful!\n')
     except TimeoutException:
         print('\nUsername/Password seems to be incorrect, please re-check\nand Re-Run the program.')
@@ -143,42 +143,29 @@ def auto_close_popup_message():
 
 
 def live_count():       # Print Live count of participants
+    driver.implicitly_wait(6)
+    live_count.number_of_participants = driver.find_element_by_class_name("l4V7wb").find_element_by_class_name("wnPUne").text
+
+    if live_count.number_of_participants == '':
+        driver.implicitly_wait(6)
+        live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip('()')
+
+    if int(live_count.number_of_participants) > live_count.max_count:
+        live_count.max_count = int(live_count.number_of_participants)
+
+    print(f'{"Live count of participants: " + live_count.number_of_participants}\r', end='', flush=True)       # Prints the live count
+    time.sleep(0.5)
+
+    # Several Participants left the meeting or recording Stopped.
     try:
-        driver.implicitly_wait(3)
-        live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
-
-        if live_count.number_of_participants == '':
-            live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip('()')
-
-        if int(live_count.number_of_participants) > live_count.max_count:
-            live_count.max_count = int(live_count.number_of_participants)
-        print(f'{"Live count of participants: " + live_count.number_of_participants}\r', end='', flush=True)       # Prints the live count
-        time.sleep(0.5)
-
-        # Several Participants left the meeting.
-        try:
-            live_count.left = driver.find_element_by_class_name("aGJE1b").text
-        except NoSuchElementException:
-            pass
-        except StaleElementReferenceException:
-            try:
-                live_count.left = driver.find_element_by_class_name("aGJE1b").text
-            except NoSuchElementException:
-                pass
-
-        # Check for stop record to end meeting
-        try:
-            live_count.rec_stop = driver.find_element_by_class_name("aGJE1b").text
-        except NoSuchElementException:
-            pass
-        except StaleElementReferenceException:
-            try:
-                live_count.rec_stop = driver.find_element_by_class_name("aGJE1b").text
-            except NoSuchElementException:
-                pass
+        live_count.left_or_rec_stop = driver.find_element_by_class_name("aGJE1b").text
     except NoSuchElementException:
-        print('Please check your internet connection and try again.\n')
-        exit_now()
+        pass
+    except StaleElementReferenceException:
+        try:
+            live_count.left_or_rec_stop = driver.find_element_by_class_name("aGJE1b").text
+        except NoSuchElementException:
+            pass
 
 
 def end_class():       # Ends the current session
@@ -280,7 +267,7 @@ driver.get('https://meet.google.com')       # Redirecting to Google Meet from st
 # Declarations
 lastClass = False
 live_count.max_count = 0
-live_count.left = live_count.rec_stop = live_count.rec_button = scheduledTimeInSeconds = classTime = classTitle = ""
+live_count.left_or_rec_stop = live_count.rec_button = scheduledTimeInSeconds = classTime = classTitle = ""
 
 # Deleting the user data, i.e., taken in the beginning
 del USERNAME, PASSWORD
@@ -365,7 +352,8 @@ else:
             pass
 
         # Clicks the JOIN NOW button
-        JoinNow = driver.find_element_by_class_name("NPEfkd")
+        # JoinNow = driver.find_element_by_class_name("NPEfkd")
+        JoinNow = driver.find_element_by_xpath("//div[@role='button']//span[contains(text(), 'Join now')]")
         if "Join now" in JoinNow.text:
             try:
                 JoinNow.click()
@@ -403,8 +391,8 @@ else:
             live_count()
             try:
                 if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or \
-                        ("Several participants left the meeting." in live_count.left) or \
-                        (("stopped recording" in live_count.rec_stop) and ((present_time() - scheduledTimeInSeconds) > 600)):
+                        ("Several participants left the meeting." in live_count.left_or_rec_stop) or \
+                        (("stopped recording" in live_count.left_or_rec_stop) and ((present_time() - scheduledTimeInSeconds) > 600)):
                     end_class()
                     break
                 else:
