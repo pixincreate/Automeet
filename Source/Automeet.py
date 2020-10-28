@@ -144,11 +144,13 @@ def auto_close_popup_message():
 
 def live_count():       # Print Live count of participants
     driver.implicitly_wait(6)
-    live_count.number_of_participants = driver.find_element_by_class_name("l4V7wb").find_element_by_class_name("wnPUne").text
+    live_count.number_of_participants = driver.find_element_by_class_name(
+        "//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[6]/div[3]/div/div[2]/div[1]/span/span/div/div/span[2]").text
 
     if live_count.number_of_participants == '':
         driver.implicitly_wait(6)
-        live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip('()')
+        live_count.number_of_participants = driver.find_element_by_xpath(
+            "//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[3]/div/div[2]/div[2]/div[1]/div[1]/span/div/span[2]").text.strip('()')
 
     if int(live_count.number_of_participants) > live_count.max_count:
         live_count.max_count = int(live_count.number_of_participants)
