@@ -85,5 +85,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Fix sudden ending of meetings from ```session - 2``` and minor console UI changes.
 - Fixed for `Ask to join` button that didn't use to do it's work properly.
 - Removed unnecessary lines of code.
-- Tried to fix the live count error -> i.e., happening since 27 / 10 / 2020. - Blame Google for that, not me!
+- Fixed Live-count error (NoSuchElementException error, to be more precise) and End-call button.
 #
