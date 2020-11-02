@@ -1,6 +1,6 @@
 """
 Automeet: Google Meet Automater
-Content Automation for https://www.meet.google.com
+Meeting Automation for https://www.meet.google.com
 Licensed under CC0-1.0 License to Pavana Narayana Bhat
 ------------------------------------------------------------------------------------------------------------------------
 Code by: Pavana Narayana Bhat AKA PiXinCreate
@@ -29,12 +29,12 @@ from selenium.webdriver.support import expected_conditions
 
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import JavascriptException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import ElementClickInterceptedException
-from selenium.common.exceptions import JavascriptException
 
 
 # Setting console size ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +65,7 @@ def white_password(prompt):       # Secure password input, an alternative to get
 def resource_path(another_way):       # Provides the facility to run on both terminal as well as python console
     try:
         usual_way = sys._MEIPASS
-    except Exception:
+    except AttributeError:
         usual_way = os.path.dirname(__file__)
     return os.path.join(usual_way, another_way)
 
@@ -144,18 +144,15 @@ def auto_close_popup_message():
 
 def live_count():       # Print Live count of participants
     driver.implicitly_wait(6)
-    live_count.number_of_participants = driver.find_element_by_class_name(
-        "//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[6]/div[3]/div/div[2]/div[1]/span/span/div/div/span[2]").text
-
+    live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
     if live_count.number_of_participants == '':
         driver.implicitly_wait(6)
-        live_count.number_of_participants = driver.find_element_by_xpath(
-            "//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[3]/div/div[2]/div[2]/div[1]/div[1]/span/div/span[2]").text.strip('()')
+        live_count.number_of_participants = driver.find_element_by_class_name("l4V7wb").find_element_by_class_name("Rua5Nb").text
 
     if int(live_count.number_of_participants) > live_count.max_count:
         live_count.max_count = int(live_count.number_of_participants)
 
-    print(f'{"Live count of participants: " + live_count.number_of_participants}\r', end='', flush=True)       # Prints the live count
+    print(f'{"Live count of participants: " + live_count.number_of_participants + "    "}\r', end='', flush=True)       # Prints the live count
     time.sleep(0.5)
 
     # Several Participants left the meeting or recording Stopped.
@@ -177,16 +174,30 @@ def end_class():       # Ends the current session
     # Clicks leave call button
     leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
     try:
-        leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[9]/div[2]/div[2]/div").click()
+        leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
     except ElementNotInteractableException:
         driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
         driver.implicitly_wait(2)
-        leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[9]/div[2]/div[2]/div").click()
+        leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
     except NoSuchElementException:
-        driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
-        driver.implicitly_wait(2)
-        leave_call.find_element_by_xpath("//*[@id='ow3']/div[1]/div/div[5]/div[3]/div[9]/div[2]/div[2]/div").click()
+        try:
+            driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
+            driver.implicitly_wait(2)
+            leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
+        except NoSuchElementException:
 
+            # Added the same above exceptions again, for better handling of errors usually caused by the bad practice of user.
+            leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
+        except ElementNotInteractableException:
+            try:
+                driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
+                driver.implicitly_wait(2)
+                leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
+            except NoSuchElementException:
+                driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
+                driver.implicitly_wait(2)
+                leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
+                                                 
     print(f'{"The meeting " + classTitle + " ended now.                                     "}\r', end='', flush=True)
     print(end='\n\n')
     time.sleep(3)
@@ -216,15 +227,15 @@ print("-" * 90, end='\n')
 
 # Login Credentials //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 print('Google Account Login:\n---------------------', end='\n')
-USERNAME = input("User Name : ")
-PASSWORD = white_password(prompt="Password  : ")
+USERNAME = "pavananarayana01" #input("User Name : ")
+PASSWORD = "P!*@NB0rN@200.1" #white_password(prompt="Password  : ")
 
 # Assigning Drivers //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 options = Options()
 options.add_argument("start-maximized")
-driverPath = './driver/chromedriver.exe'
-driverPathF64 = './driver/geckodriver-64'
-driverPathF32 = './driver/geckodriver-32'
+driverPath = './selenium/webdriver/chromedriver.exe'
+driverPathF64 = './selenium/webdriver/geckodriver-64'
+driverPathF32 = './selenium/webdriver/geckodriver-32'
 
 # 1 to allow permissions and 2 to block them
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
