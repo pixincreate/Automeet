@@ -1,6 +1,6 @@
 """
 Automeet: Google Meet Automater
-Meeting Automation for https://www.meet.google.com
+Meetings Automation for https://www.meet.google.com
 Licensed under CC0-1.0 License to Pavana Narayana Bhat
 ------------------------------------------------------------------------------------------------------------------------
 Code by: Pavana Narayana Bhat AKA PiXinCreate
