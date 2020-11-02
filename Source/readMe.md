@@ -12,7 +12,7 @@ Code by: Pavana Narayana Bhat AKA PiXinCreate
 
 Description:
 
-    Automeet is a selenium based python script to
+   Automeet is a selenium based python script to
 
 join and exit online sessions / meetings on Google
 
