@@ -143,14 +143,24 @@ def auto_close_popup_message():
 
 
 def live_count():       # Print Live count of participants
-    driver.implicitly_wait(6)
-    live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
-    if live_count.number_of_participants == '':
+    try:
         driver.implicitly_wait(6)
-        live_count.number_of_participants = driver.find_element_by_class_name("l4V7wb").find_element_by_class_name("Rua5Nb").text
+        live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
+        if live_count.number_of_participants == '':
+            driver.implicitly_wait(6)
+            live_count.number_of_participants = driver.find_element_by_class_name("eUyZxf").find_element_by_class_name("Rua5Nb").text
 
-    if int(live_count.number_of_participants) > live_count.max_count:
-        live_count.max_count = int(live_count.number_of_participants)
+        if int(live_count.number_of_participants) > live_count.max_count:
+            live_count.max_count = int(live_count.number_of_participants)
+    except StaleElementReferenceException:
+        driver.implicitly_wait(6)
+        live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
+        if live_count.number_of_participants == '':
+            driver.implicitly_wait(6)
+            live_count.number_of_participants = driver.find_element_by_class_name("eUyZxf").find_element_by_class_name("Rua5Nb").text
+
+        if int(live_count.number_of_participants) > live_count.max_count:
+            live_count.max_count = int(live_count.number_of_participants)
 
     print(f'{"Live count of participants: " + live_count.number_of_participants + "    "}\r', end='', flush=True)       # Prints the live count
     time.sleep(0.5)
@@ -414,7 +424,7 @@ else:
                             exit_now()
                 except NoSuchElementException:
                     pass
-                
+
             try:
                 if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or \
                         ("Several participants left the meeting." in live_count.left_or_rec_stop) or \
