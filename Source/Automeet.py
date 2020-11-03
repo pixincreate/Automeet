@@ -1,6 +1,6 @@
 """
 Automeet: Google Meet Automater
-Meetings Automation for https://www.meet.google.com
+Meeting Automation for https://www.meet.google.com
 Licensed under CC0-1.0 License to Pavana Narayana Bhat
 ------------------------------------------------------------------------------------------------------------------------
 Code by: Pavana Narayana Bhat AKA PiXinCreate
@@ -401,7 +401,20 @@ else:
         # Clicks END button if conditions are satisfied.
         # Ends session when either of the condition is satisfied
         while True:
-            live_count()
+            try:
+                live_count()
+            except NoSuchElementException:       # An exception if Network is detected.
+                try:
+                    ConnectionLost = driver.find_element_by_class_name("RkzbPb").text
+                    if "You lost your network connection. Trying to reconnect." in ConnectionLost:
+                        try:
+                            WebDriverWait(driver, 180).until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "crqnQb")))
+                        except TimeoutException:
+                            print("Please check your Internet connection and Re-Start the Automeet.")
+                            exit_now()
+                except NoSuchElementException:
+                    pass
+                
             try:
                 if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or \
                         ("Several participants left the meeting." in live_count.left_or_rec_stop) or \
@@ -410,7 +423,6 @@ else:
                     break
                 else:
                     pass
-
             except ValueError:
                 pass
             except AttributeError:
