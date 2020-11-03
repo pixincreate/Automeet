@@ -85,6 +85,7 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Fix sudden ending of meetings from ```session - 2``` and minor console UI changes.
 - Fixed for `Ask to join` button that didn't use to do it's work properly.
 - Removed unnecessary lines of code.
-- Fixed Live-count error (```NoSuchElementException``` error, to be more precise) and ```End-call``` button.
+- Fixed Live-count error (```NoSuchElementException``` and ```StaleElementReferenceException``` error, to be more precise) and ```End-call``` button.
 - Added some exceptions to handle ```You lost your network connection. Trying to reconnect.``` in a systematic way.
+- Fix Live Count pause when `people` or `chat` tab is open. 
 #
