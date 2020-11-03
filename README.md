@@ -86,4 +86,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Fixed for `Ask to join` button that didn't use to do it's work properly.
 - Removed unnecessary lines of code.
 - Fixed Live-count error (```NoSuchElementException``` error, to be more precise) and ```End-call``` button.
+- Added some exceptions to handle ```You lost your network connection. Trying to reconnect.``` in a systematic way.
 #
