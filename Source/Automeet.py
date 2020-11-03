@@ -148,7 +148,7 @@ def live_count():       # Print Live count of participants
         live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
         if live_count.number_of_participants == '':
             driver.implicitly_wait(6)
-            live_count.number_of_participants = driver.find_element_by_class_name("eUyZxf").find_element_by_class_name("Rua5Nb").text
+            live_count.number_of_participants = driver.find_element_by_class_name("Rua5Nb").text
 
         if int(live_count.number_of_participants) > live_count.max_count:
             live_count.max_count = int(live_count.number_of_participants)
@@ -157,7 +157,7 @@ def live_count():       # Print Live count of participants
         live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
         if live_count.number_of_participants == '':
             driver.implicitly_wait(6)
-            live_count.number_of_participants = driver.find_element_by_class_name("eUyZxf").find_element_by_class_name("Rua5Nb").text
+            live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text
 
         if int(live_count.number_of_participants) > live_count.max_count:
             live_count.max_count = int(live_count.number_of_participants)
