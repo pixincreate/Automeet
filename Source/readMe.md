@@ -24,4 +24,4 @@ single login to Google Account via https://stackauth.com
 
 Automatically.
 
-**NOTE:** Password is invisible. Check the readme.md for more information.
+**NOTE:** Password is invisible.  A simple approach to secure password input. 
