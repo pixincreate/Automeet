@@ -146,21 +146,28 @@ def live_count():       # Print Live count of participants
     try:
         driver.implicitly_wait(6)
         live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
+
         if live_count.number_of_participants == '':
             driver.implicitly_wait(6)
-            live_count.number_of_participants = driver.find_element_by_class_name("Rua5Nb").text
+            live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
 
         if int(live_count.number_of_participants) > live_count.max_count:
             live_count.max_count = int(live_count.number_of_participants)
+
     except StaleElementReferenceException:
         driver.implicitly_wait(6)
         live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
+
         if live_count.number_of_participants == '':
             driver.implicitly_wait(6)
-            live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip('()')
+            live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
 
         if int(live_count.number_of_participants) > live_count.max_count:
             live_count.max_count = int(live_count.number_of_participants)
+
+    except AttributeError or TypeError:
+        print("Browser instance unexpectedly closed by the user. Please try again.")
+        exit_now()
 
     print(f'{"Live count of participants: " + live_count.number_of_participants + "    "}\r', end='', flush=True)       # Prints the live count
     time.sleep(0.5)
@@ -314,9 +321,6 @@ else:
     # Printing Logs/Happenings on the console
     print('-' * 90, end='\n')
     print('Activity Logs:\n--------------', end='\n')
-    print("\nNOTE: If any of the POP-UPS that appear on Browser instance don't close within\n"
-          "      4 seconds, kindly close it manually, else it will not allow for the Automeet\n"
-          "      to continue further.\n\n")
 
     for i in range(0, len(time_table())):
         try:
@@ -413,7 +417,7 @@ else:
         while True:
             try:
                 live_count()
-            except NoSuchElementException:       # An exception if Network is detected.
+            except NoSuchElementException:       # An exception if Network change is detected.
                 try:
                     ConnectionLost = driver.find_element_by_class_name("RkzbPb").text
                     if "You lost your network connection. Trying to reconnect." in ConnectionLost:
