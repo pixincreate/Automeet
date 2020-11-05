@@ -21,7 +21,6 @@ Automeet is all about automating the process of logging **in** and **out** when 
 ### Things to keep in mind:
 - Please make sure that the **Google Meet meetings are scheduled on your Google Calendar** and the timings **doesnot** overlap with each other(like 2 meetings at the same time or whatever).
 - Do note that the **Password** that you enter will show you nothing.
-- User will get an error stating **```valueError```** when a user interferes at the time of Automation. Just re-run the **Automeet**.
 
 ### Found any bugs?
 Incase if you find any bugs, please raise an *[Issue Ticket](https://github.com/pixincreate/Automeet/issues/new/choose)* under the *[Issues Tab](https://github.com/pixincreate/Automeet/issues)* in this Repository. Will look into it, then solve the issue if it exist ASAP.
