@@ -9,7 +9,7 @@ Automeet is all about automating the process of logging **in** and **out** when 
 
 ### PreRequisites:
 - **Windows** Operating system.
-- Google Chrome / Brave (v**85.0** or **above**).
+- Firefox / Google Chrome / Brave (v**85.0** or **above**).
 - A Google **Account**.
 - **Stable Internet** connection with atleast 10 Mbps.
 
