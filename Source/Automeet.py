@@ -214,8 +214,8 @@ def end_class():       # Ends the current session
                 driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
                 driver.implicitly_wait(2)
                 leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
-                                                 
-    print(f'{"The meeting " + classTitle + " ended now.                                     "}\r', end='', flush=True)
+    double_quotes = "\""
+    print(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.                                     '}\r", end='', flush=True)
     print(end='\n\n')
     time.sleep(3)
     # Returns to the Home Screen
@@ -345,7 +345,7 @@ else:
         # Joining the class 90 seconds before the scheduled time.
         if ((scheduledTimeInSeconds - present_time()) <= 90) or "\nNOW" in time_table()[i][2].text.upper():
 
-            print('Joining the meeting \"' + classTitle + '\" now...', end='    ', flush=True)
+            print('Joining \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
                 # Clicks on the specific class which is scheduled.
                 time_table()[i][2].click()
@@ -358,7 +358,7 @@ else:
             auto_close_popup_message()
             print('Will join 1m 30s before the session starts.')
             time.sleep((scheduledTimeInSeconds - 90) - present_time())
-            print('Joining the meeting \"' + classTitle + '\" now...', end='    ', flush=True)
+            print('Joining \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
                 time_table()[i][2].click()
             except StaleElementReferenceException:
