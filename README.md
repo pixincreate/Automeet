@@ -11,7 +11,7 @@ Automeet is all about automating the process of logging **in** and **out** when 
 - **Windows** Operating system.
 - Firefox / Google Chrome / Brave (v**85.0** or **above**).
 - A Google **Account**.
-- **Stable Internet** connection with atleast 10 Mbps.
+- **Stable Internet** connection.
 
 ### Usage:
 - Once the **PreRequisites** is satisfied, **Download** the executable from the *[releases section](https://github.com/pixincreate/Automeet/releases/latest)*.
