@@ -3,7 +3,7 @@
 To download the **latest** release, click **_[here](https://github.com/pixincreate/Automeet/releases/latest)_**.
 
 ### Introduction:
-Automeet is all about automating the process of logging **in** and **out** when attending a Meeting on Google Meet platform with a single run.
+**Automeet** is all about automating the process of logging **in** and **out** when attending a Meeting on Google Meet platform with a single run.
 
 **Code by:** Pavana Narayana Bhat
 
