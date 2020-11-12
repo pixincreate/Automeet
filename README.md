@@ -50,7 +50,7 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 
 © PiXinCreate All rigths reserved.
 #
-## Change Logs based on the commits to the Source:
+## Improvements over time:
 - Initial Release.
 - Fixed ```IndexError```, ```NoSuchElementException``` that used to appear in common for no reasons.
 - Some Console CLI changes to interact with user.
