@@ -76,5 +76,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Fixed Live-count error (```NoSuchElementException``` and ```StaleElementReferenceException``` error, to be more precise) and ```End-call``` button.
 - Added some exceptions to handle ```You lost your network connection. Trying to reconnect.``` in a systematic way.
 - Fix Live Count when `people` or `chat` tab is open.
-- Change ```end_class``` dependency from ```xpath``` to ```aria-label``` just to avoid exceptions like ```NoSuchElementExceptionError```.
+- Change ```end_class``` dependency from ```xpath``` to ```aria-label``` just to avoid exceptions like ```NoSuchElementException```.
 #
