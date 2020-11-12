@@ -148,26 +148,21 @@ def live_count():       # Print Live count of participants
         live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
 
         if live_count.number_of_participants == '':
-            driver.implicitly_wait(6)
             live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
-
-        if int(live_count.number_of_participants) > live_count.max_count:
-            live_count.max_count = int(live_count.number_of_participants)
 
     except StaleElementReferenceException:
         driver.implicitly_wait(6)
         live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
 
         if live_count.number_of_participants == '':
-            driver.implicitly_wait(6)
             live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
-
-        if int(live_count.number_of_participants) > live_count.max_count:
-            live_count.max_count = int(live_count.number_of_participants)
 
     except AttributeError or TypeError:
         print("Browser instance unexpectedly closed by the user. Please try again.")
         exit_now()
+
+    if int(live_count.number_of_participants) > live_count.max_count:
+        live_count.max_count = int(live_count.number_of_participants)
 
     print(f'{"Live count of participants: " + live_count.number_of_participants + "    "}\r', end='', flush=True)       # Prints the live count
     time.sleep(0.5)
@@ -189,31 +184,24 @@ def end_class():       # Ends the current session
 
     time.sleep(10)
     # Clicks leave call button
-    leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
     try:
-        leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
-    except ElementNotInteractableException:
+        leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
+        leave_call.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
+    except NoSuchElementException:
         driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
         driver.implicitly_wait(2)
-        leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
-    except NoSuchElementException:
+        leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
+        leave_call.find_element_by_xpath("//div[@aria-label='Leave call']").click()
+    except StaleElementReferenceException:
         try:
+            leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
+            leave_call.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
+        except NoSuchElementException:
             driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
             driver.implicitly_wait(2)
-            leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
-        except NoSuchElementException:
+            leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
+            leave_call.find_element_by_xpath("//div[@aria-label='Leave call']").click()
 
-            # Added the same above exceptions again, for better handling of errors usually caused by the bad practice of user.
-            leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
-        except ElementNotInteractableException:
-            try:
-                driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
-                driver.implicitly_wait(2)
-                leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
-            except NoSuchElementException:
-                driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
-                driver.implicitly_wait(2)
-                leave_call.find_element_by_xpath("/html/body/div[1]/c-wiz/div[1]/div/div[7]/div[3]/div[9]/div[2]/div[2]/div").click()
     double_quotes = "\""
     print(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.                                     '}\r", end='', flush=True)
     print(end='\n\n')
