@@ -20,7 +20,7 @@ join and exit online sessions / meetings on Google
 
 Meet that is scheduled in Google Calendar with a
 
-single login to Google Account via https://stackauth.com
+single login to Google Account via [**_Stackauth_**](https://stackauth.com)
 
 Automatically.
 
