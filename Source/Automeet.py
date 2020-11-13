@@ -340,7 +340,17 @@ else:
             print('Joining \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
                 # Clicks on the specific class which is scheduled.
-                time_table()[i][2].click()
+                try:
+                    time_table()[i][2].click()
+                except IndexError:
+                    try:
+                        driver.execute_script("alert('This was the last session for today. Tab closes in 5 seconds.')")
+                        auto_close_popup_message()
+                    except JavascriptException:
+                        pass
+                    print('\nLast session ended.\n')
+                    time.sleep(5)
+                    exit_now()
             except StaleElementReferenceException:
                 stale_element_relief()
 
@@ -353,6 +363,15 @@ else:
             print('Joining \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
                 time_table()[i][2].click()
+            except IndexError:
+                try:
+                    driver.execute_script("alert('This was the last session for today. Tab closes in 5 seconds.')")
+                    auto_close_popup_message()
+                except JavascriptException:
+                    pass
+                print('\nLast session ended.\n')
+                time.sleep(5)
+                exit_now()
             except StaleElementReferenceException:
                 stale_element_relief()
 
