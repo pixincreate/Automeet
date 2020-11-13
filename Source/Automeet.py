@@ -185,22 +185,26 @@ def end_class():       # Ends the current session
     time.sleep(10)
     # Clicks leave call button
     try:
-        leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
-        leave_call.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
+        driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
     except NoSuchElementException:
         driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
         driver.implicitly_wait(2)
-        leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
-        leave_call.find_element_by_xpath("//div[@aria-label='Leave call']").click()
+        driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
+    except ElementNotInteractableException:
+        driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
+        driver.implicitly_wait(2)
+        driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
     except StaleElementReferenceException:
         try:
-            leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
-            leave_call.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
+            driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
         except NoSuchElementException:
             driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
             driver.implicitly_wait(2)
-            leave_call = driver.find_element_by_class_name("rG0ybd").find_element_by_class_name("q2u11")
-            leave_call.find_element_by_xpath("//div[@aria-label='Leave call']").click()
+            driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
+        except ElementNotInteractableException:
+            driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
+            driver.implicitly_wait(2)
+            driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
 
     double_quotes = "\""
     print(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.                                     '}\r", end='', flush=True)
