@@ -359,7 +359,10 @@ else:
             driver.execute_script("alert('Will join 1m 30s before the session starts.')")
             auto_close_popup_message()
             print('Will join 1m 30s before the session starts.')
-            time.sleep((scheduledTimeInSeconds - 90) - present_time())
+            try:
+                time.sleep((scheduledTimeInSeconds - 90) - present_time())
+            except ValueError:
+                pass
             print('Joining \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
                 time_table()[i][2].click()
