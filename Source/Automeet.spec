@@ -3,9 +3,9 @@
 block_cipher = None
 
 
-a = Analysis(['E:/Coding/Python/My_Projects/GoogleMeetAutomation/Automeet.py'],
-             pathex=['E:\\Coding\\Python\\My_Projects\\GoogleMeetAutomation\\Executables'],
-             binaries=[('E:/Coding/Python/My_Projects/GoogleMeetAutomation/Executables/Drivers/chromedriver.exe', './selenium/webdriver'), ('E:/Coding/Python/My_Projects/GoogleMeetAutomation/Executables/Drivers/geckodriver-32.exe', './selenium/webdriver'), ('E:/Coding/Python/My_Projects/GoogleMeetAutomation/Executables/Drivers/geckodriver-64.exe', './selenium/webdriver')],
+a = Analysis(['drive:/path/to/source code'],
+             pathex=['drive:\\path\\to\\save\\pixincreate spec file'],
+             binaries=[('drive:/path/to/pixincreate chromedriver.exe', './selenium/webdriver'), ('drive:/path/to/pixincreate geckodriver-32.exe', './selenium/webdriver'), ('drive:/path/to/pixincreate geckodriver-64.exe', './selenium/webdriver')],
              datas=[],
              hiddenimports=[],
              hookspath=[],
@@ -23,11 +23,11 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='Automeet',
+          name='Automeet by PiXinCreate',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='E:\\Coding\\Python\\My_Projects\\GoogleMeetAutomation\\Executables\\Automeet.ico')
+          console=True , icon='drive:\\path\\to\\icon\\pixincreate Automeet.ico')
