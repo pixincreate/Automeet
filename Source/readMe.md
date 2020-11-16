@@ -28,5 +28,5 @@ Automatically.
 
 ## Source Contains:
 - Source code
-- Spec file for compiling src to executable.
+- Spec file for compiling src to executable[_for reference_].
 - Bat file for direct conversion of src to an executable.
