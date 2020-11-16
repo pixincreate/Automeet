@@ -24,4 +24,9 @@ single login to Google Account via [**_Stackauth_**](https://stackauth.com)
 
 Automatically.
 
-**NOTE:** Password will be **HIDDEN**.  A **simple** approach to **_secure password input_**!. 
+**NOTE:** Password will be **HIDDEN**.  A **simple** approach to **_secure password input_**!.   
+
+## Source Contains:
+- Source code
+- Spec file for compiling src to executable.
+- Bat file for direct conversion of src to an executable.
