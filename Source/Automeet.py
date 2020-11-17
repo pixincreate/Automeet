@@ -246,7 +246,7 @@ PASSWORD = white_password(prompt="Password  : ")
 # Assigning Drivers //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 options = Options()
 options.add_argument("start-maximized")
-driverPath = "E:\\Coding\\Python\\My_Projects\\GoogleMeetAutomation\\chromedriver.exe"#'./selenium/webdriver/chromedriver.exe'
+driverPath = './selenium/webdriver/chromedriver.exe'
 driverPathF64 = './selenium/webdriver/geckodriver-64'
 driverPathF32 = './selenium/webdriver/geckodriver-32'
 
