@@ -124,7 +124,7 @@ def present_time():       # Grabs the current time
     return current_time_in_seconds
 
 
-def time_conversion(seconds):
+def wait_time_conversion(seconds):
     return str(dt.timedelta(seconds=seconds))
 
 
@@ -364,7 +364,7 @@ else:
             auto_close_popup_message()
             print('Will join 1m 30s before the session starts.\nCurrent waiting time : ', end=' ')
             waitingTime = (scheduledTimeInSeconds - 90) - present_time()
-            print(time_conversion(waitingTime), end='\n')
+            print(wait_time_conversion(waitingTime), end='\n')
             try:
                 time.sleep((scheduledTimeInSeconds - 90) - present_time())
             except ValueError:
