@@ -241,7 +241,7 @@ print("-" * 90, end='\n')
 # Login Credentials //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 print('Google Account Login:\n---------------------', end='\n')
 USERNAME = input("User Name : ")
-PASSWORD = #white_password(prompt="Password  : ")
+PASSWORD = white_password(prompt="Password  : ")
 
 # Assigning Drivers //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 options = Options()
@@ -324,7 +324,14 @@ else:
             classTime = time_table()[i][0].strftime("%I:%M %p")
             scheduledTimeInSeconds = int((dt.datetime.strptime(classTime, "%I:%M %p") - dt.datetime(1900, 1, 1)).total_seconds())
         except IndexError:
-            lastClass = True
+            try:
+                driver.execute_script("alert('This was the last session for today. Tab closes in 5 seconds.')")
+                auto_close_popup_message()
+            except JavascriptException:
+                pass
+            print('\nLast session ended.\n')
+            time.sleep(5)
+            exit_now()
 
         try:
             classTimeNextSession = time_table()[i + 1][0].strftime("%I:%M %p")
