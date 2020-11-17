@@ -124,6 +124,10 @@ def present_time():       # Grabs the current time
     return current_time_in_seconds
 
 
+def time_conversion(seconds):
+    return str(dt.timedelta(seconds=seconds))
+
+
 def stale_element_relief():       # Refreshing DOM. It waits for the element to not be stale
     time_table()
     time.sleep(4)
@@ -236,8 +240,8 @@ print("-" * 90, end='\n')
 
 # Login Credentials //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 print('Google Account Login:\n---------------------', end='\n')
-USERNAME = 'pavananarayana01' #input("User Name : ")
-PASSWORD = 'P4v@nB0rN@200.1' #white_password(prompt="Password  : ")
+USERNAME = input("User Name : ")
+PASSWORD = white_password(prompt="Password  : ")
 
 # Assigning Drivers //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 options = Options()
@@ -359,7 +363,8 @@ else:
             driver.execute_script("alert('Will join 1m 30s before the session starts.')")
             auto_close_popup_message()
             print('Will join 1m 30s before the session starts.\nCurrent waiting time : ', end=' ')
-            print((scheduledTimeInSeconds - 90) - present_time(), end='\n')
+            waitingTime = (scheduledTimeInSeconds - 90) - present_time()
+            print(time_conversion(waitingTime), end='\n')
             try:
                 time.sleep((scheduledTimeInSeconds - 90) - present_time())
             except ValueError:
