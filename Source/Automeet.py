@@ -124,7 +124,7 @@ def present_time():       # Grabs the current time
     return current_time_in_seconds
 
 
-def wait_time_conversion(seconds):
+def time_conversion(seconds):
     return str(dt.timedelta(seconds=seconds))
 
 
@@ -340,7 +340,7 @@ else:
 
         # Joining the class 90 seconds before the scheduled time.
         if ((scheduledTimeInSeconds - present_time()) <= 90) or "\nNOW" in time_table()[i][2].text.upper():
-
+            print(time_conversion(scheduledTimeInSeconds), end='    ')
             print('Joining \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
                 # Clicks on the specific class which is scheduled.
@@ -364,11 +364,12 @@ else:
             auto_close_popup_message()
             print('Will join 1m 30s before the session starts.\nCurrent waiting time : ', end=' ')
             waitingTime = (scheduledTimeInSeconds - 90) - present_time()
-            print(wait_time_conversion(waitingTime), end='\n')
+            print(time_conversion(waitingTime), end='\n')
             try:
                 time.sleep((scheduledTimeInSeconds - 90) - present_time())
             except ValueError:
                 pass
+            print(time_conversion(scheduledTimeInSeconds), end='    ')
             print('Joining \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
                 time_table()[i][2].click()
