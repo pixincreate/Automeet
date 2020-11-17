@@ -236,13 +236,13 @@ print("-" * 90, end='\n')
 
 # Login Credentials //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 print('Google Account Login:\n---------------------', end='\n')
-USERNAME = input("User Name : ")
-PASSWORD = white_password(prompt="Password  : ")
+USERNAME = 'pavananarayana01' #input("User Name : ")
+PASSWORD = 'P4v@nB0rN@200.1' #white_password(prompt="Password  : ")
 
 # Assigning Drivers //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 options = Options()
 options.add_argument("start-maximized")
-driverPath = './selenium/webdriver/chromedriver.exe'
+driverPath = "E:\\Coding\\Python\\My_Projects\\GoogleMeetAutomation\\chromedriver.exe"#'./selenium/webdriver/chromedriver.exe'
 driverPathF64 = './selenium/webdriver/geckodriver-64'
 driverPathF32 = './selenium/webdriver/geckodriver-32'
 
@@ -358,7 +358,8 @@ else:
             # When waiting time to class is more than 1m 30s
             driver.execute_script("alert('Will join 1m 30s before the session starts.')")
             auto_close_popup_message()
-            print('Will join 1m 30s before the session starts.')
+            print('Will join 1m 30s before the session starts.\nCurrent waiting time : ', end=' ')
+            print((scheduledTimeInSeconds - 90) - present_time(), end='\n')
             try:
                 time.sleep((scheduledTimeInSeconds - 90) - present_time())
             except ValueError:
