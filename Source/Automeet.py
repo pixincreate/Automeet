@@ -241,7 +241,7 @@ print("-" * 90, end='\n')
 # Login Credentials //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 print('Google Account Login:\n---------------------', end='\n')
 USERNAME = input("User Name : ")
-PASSWORD = white_password(prompt="Password  : ")
+PASSWORD = #white_password(prompt="Password  : ")
 
 # Assigning Drivers //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 options = Options()
@@ -330,7 +330,7 @@ else:
             classTimeNextSession = time_table()[i + 1][0].strftime("%I:%M %p")
             scheduledTimeInSecondsForNextSession = int((dt.datetime.strptime(classTimeNextSession, "%I:%M %p")
                                                         - dt.datetime(1900, 1, 1)).total_seconds())
-            if (scheduledTimeInSecondsForNextSession - present_time()) < 240:
+            if (scheduledTimeInSecondsForNextSession - present_time()) < 300:
                 classTitle = time_table()[i + 1][1].upper()
                 i += 1
         except IndexError:
@@ -340,21 +340,10 @@ else:
 
         # Joining the class 90 seconds before the scheduled time.
         if ((scheduledTimeInSeconds - present_time()) <= 90) or "\nNOW" in time_table()[i][2].text.upper():
-            print(time_conversion(scheduledTimeInSeconds), end='    ')
             print('Joining \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
                 # Clicks on the specific class which is scheduled.
-                try:
-                    time_table()[i][2].click()
-                except IndexError:
-                    try:
-                        driver.execute_script("alert('This was the last session for today. Tab closes in 5 seconds.')")
-                        auto_close_popup_message()
-                    except JavascriptException:
-                        pass
-                    print('\nLast session ended.\n')
-                    time.sleep(5)
-                    exit_now()
+                time_table()[i][2].click()
             except StaleElementReferenceException:
                 stale_element_relief()
 
@@ -369,19 +358,10 @@ else:
                 time.sleep((scheduledTimeInSeconds - 90) - present_time())
             except ValueError:
                 pass
-            print(time_conversion(scheduledTimeInSeconds), end='    ')
             print('Joining \"' + classTitle + '\" now...', end='    ', flush=True)
             try:
+                # Clicks on the specific class which is scheduled.
                 time_table()[i][2].click()
-            except IndexError:
-                try:
-                    driver.execute_script("alert('This was the last session for today. Tab closes in 5 seconds.')")
-                    auto_close_popup_message()
-                except JavascriptException:
-                    pass
-                print('\nLast session ended.\n')
-                time.sleep(5)
-                exit_now()
             except StaleElementReferenceException:
                 stale_element_relief()
 
