@@ -190,7 +190,6 @@ def live_count():       # Print Live count of participants
 
 def end_class():       # Ends the current session
     live_count.max_count = 0
-
     time.sleep(10)
     # Clicks leave call button
     try:
@@ -324,6 +323,7 @@ else:
     print('Activity Logs:\n--------------', end='\n')
 
     for i in range(0, len(time_table())):
+        live_count.max_count = 0    # Setting max_count to 0 again.
         try:
             classTitle = time_table()[i][1].upper()
             classTime = time_table()[i][0].strftime("%I:%M %p")
