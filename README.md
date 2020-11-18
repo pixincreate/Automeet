@@ -79,5 +79,6 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Change ```end_class``` dependency from ```xpath``` to ```aria-label``` just to avoid exceptions like ```NoSuchElementException```.
 - Fix ```IndexError``` at ```lastclass```.
 - Fix rare ```ValueError``` when meetings ends at less then 1m 30s to the next scheduled meeting.
-- ```Waiting time``` and ```scheduled time``` for upcoming session is now made visible. 
+- Static ```Waiting time``` for upcoming session is now made visible.
+- Modified ```Static waiting time``` into ```Dynamic waiting time```.
 #
