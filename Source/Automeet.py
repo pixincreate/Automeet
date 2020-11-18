@@ -124,8 +124,13 @@ def present_time():       # Grabs the current time
     return current_time_in_seconds
 
 
-def time_conversion(seconds):
-    return str(dt.timedelta(seconds=seconds))
+def timer(seconds):
+    while seconds:
+        mins, secs = divmod(seconds, 60)
+        count_down = '{:02d}:{:02d}'.format(mins, secs)
+        print('Will join in :  ' + count_down, end='\r', flush=True)
+        time.sleep(1)
+        seconds -= 1
 
 
 def stale_element_relief():       # Refreshing DOM. It waits for the element to not be stale
@@ -358,9 +363,8 @@ else:
             # When waiting time to class is more than 1m 30s
             driver.execute_script("alert('Will join 1m 30s before the session starts.')")
             auto_close_popup_message()
-            print('Will join 1m 30s before the session starts.\nCurrent waiting time : ', end=' ')
             waitingTime = (scheduledTimeInSeconds - 90) - present_time()
-            print(time_conversion(waitingTime), end='\n')
+            timer(waitingTime)
             try:
                 time.sleep((scheduledTimeInSeconds - 90) - present_time())
             except ValueError:
@@ -378,8 +382,8 @@ else:
             blockPopUp = driver.find_element_by_xpath("/html/body/div[2]/div[3]/div/div[2]/div[2]/div[1]/div/span/span").click()
         except NoSuchElementException:
             pass
-        turnOffMic = driver.find_element_by_class_name("EhAUAc").find_element_by_class_name("ZB88ed").click()
-        turnOffCamera = driver.find_element_by_class_name("EhAUAc").find_element_by_class_name("GOH7Zb").click()
+        turnOffMic = driver.find_element_by_xpath("//div[@aria-label='Turn off microphone (ctrl + d)']").click()
+        turnOffCamera = driver.find_element_by_xpath("//div[@aria-label='Turn off camera (ctrl + e)']").click()
         try:
             bgBlur = driver.find_element_by_xpath(
                 "/html/body/div[2]/c-wiz/div/div/div[5]/div[3]/div/div[2]/div/div/div[1]/div/div[6]").click()
