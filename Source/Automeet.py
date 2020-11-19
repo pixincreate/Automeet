@@ -143,12 +143,16 @@ def stale_element_relief():       # Refreshing DOM. It waits for the element to 
 
 
 def auto_close_popup_message():
-    time.sleep(4)
+    time.sleep(5)
     try:
-        driver.implicitly_wait(4)
+        driver.implicitly_wait(10)
         driver.switch_to.alert.accept()
     except NoAlertPresentException:
-        pass
+        try:
+            driver.implicitly_wait(10)
+            driver.switch_to.alert.accept()
+        except NoAlertPresentException:
+            pass
 
 
 def live_count():       # Print Live count of participants
@@ -165,6 +169,9 @@ def live_count():       # Print Live count of participants
 
         if live_count.number_of_participants == '':
             live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
+
+    except ValueError:
+        live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
 
     except AttributeError or TypeError:
         print("Browser instance unexpectedly closed by the user. Please try again.")
@@ -323,7 +330,6 @@ else:
     print('Activity Logs:\n--------------', end='\n')
 
     for i in range(0, len(time_table())):
-        live_count.max_count = 0    # Setting max_count to 0 again.
         try:
             classTitle = time_table()[i][1].upper()
             classTime = time_table()[i][0].strftime("%I:%M %p")
@@ -442,9 +448,20 @@ else:
                     pass
 
             try:
-                if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or \
+                """if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or \
                         ("Several participants left the meeting." in live_count.left_or_rec_stop) or \
-                        (("stopped recording" in live_count.left_or_rec_stop) and ((present_time() - scheduledTimeInSeconds) > 600)):
+                        (("stopped recording" in live_count.left_or_rec_stop) and ((present_time() - scheduledTimeInSeconds) > 600)):"""
+
+                if int(live_count.number_of_participants) <= int(live_count.max_count) // 4:
+                    print('Meeting ends as Number of People Reduced to 1/4th the total strength.', end='\r', flush=True)
+                    end_class()
+                    break
+                elif "Several participants left the meeting." in live_count.left_or_rec_stop:
+                    print('Meeting ends as Several participants left the meeting.', end='\r', flush=True)
+                    end_class()
+                    break
+                elif ("stopped recording" in live_count.left_or_rec_stop) and ((present_time() - scheduledTimeInSeconds) > 600):
+                    print('Meeting ends as the recording stopped.', end='\r', flush=True)
                     end_class()
                     break
                 else:
