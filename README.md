@@ -31,7 +31,7 @@ Incase if you find any bugs, please raise an *[Issue Ticket](https://github.com/
 *Q*: **Why _Automeet_ is SLOW at Start up**?  
 *A*: It is a standalone executable file that contains all the required files to run the **Automeet**. As the executable creates a temporary folder to extract the files that are requierd by the **Automeet** to run during the Start up, it takes around `2 - 5` seconds at Max!
 
-*Q*: **How did I create the EXECUTABLES**?  
+*Q*: **How EXECUTABLES are made**?  
 *A*: `.exe` has been created using *[pyinstaller](https://pypi.org/project/pyinstaller/)*.
 
 ### Feature updates(will be added - If Online meetings continues to be conducted everywhere):
