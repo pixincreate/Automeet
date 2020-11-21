@@ -9,7 +9,7 @@ To download the **latest** release, click **_[here](https://github.com/pixincrea
 
 ### PreRequisites:
 - **Windows** Operating system.
-- Firefox / Google Chrome / Brave (v**85.0** or **above**).
+- Firefox / Google Chrome / Brave (v**87.0** or **above**).
 - A Google **Account**.
 - **Stable Internet** connection.
 
@@ -81,4 +81,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Fix rare ```ValueError``` when meetings ends at less then 1m 30s to the next scheduled meeting.
 - Static ```Waiting time``` for upcoming session is now made visible.
 - Modified ```Static waiting time``` into ```Dynamic waiting time```.
+- Update chrome driver to 87.0
 #
