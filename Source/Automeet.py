@@ -287,6 +287,9 @@ except WebDriverException:
         except WebDriverException:
             # For 32 Bit Firefox
             driver = webdriver.Firefox(executable_path=driverPathF32)
+except FileNotFoundError:
+    print("Webdriver seems to be outdated, download the LATEST VERSION of AUTOMEET from here: "
+          "'https://github.com/pixincreate/Automeet/releases/latest'", end='\n')
 
 # Logging in /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 try:
@@ -448,10 +451,6 @@ else:
                     pass
 
             try:
-                """if ((int(live_count.number_of_participants)) <= int(int(live_count.max_count) / 4)) or \
-                        ("Several participants left the meeting." in live_count.left_or_rec_stop) or \
-                        (("stopped recording" in live_count.left_or_rec_stop) and ((present_time() - scheduledTimeInSeconds) > 600)):"""
-
                 if int(live_count.number_of_participants) <= int(live_count.max_count) // 4:
                     print('Meeting ends as Number of People Reduced to 1/4th the total strength.', end='\r', flush=True)
                     end_class()
