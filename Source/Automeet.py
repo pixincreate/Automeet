@@ -391,8 +391,16 @@ else:
             blockPopUp = driver.find_element_by_xpath("/html/body/div[2]/div[3]/div/div[2]/div[2]/div[1]/div/span/span").click()
         except NoSuchElementException:
             pass
-        turnOffMic = driver.find_element_by_xpath("//div[@aria-label='Turn off microphone (CTRL + D)']").click()
-        turnOffCamera = driver.find_element_by_xpath("//div[@aria-label='Turn off camera (CTRL + E)']").click()
+
+        try:
+            turnOffMic = driver.find_element_by_xpath("//div[@aria-label='Turn off microphone (CTRL + D)']").click()
+        except NoSuchElementException:
+            turnOffMic = driver.find_element_by_xpath("//div[@aria-label='Turn off microphone (ctrl + d)']").click()
+        try:
+            turnOffCamera = driver.find_element_by_xpath("//div[@aria-label='Turn off camera (CTRL + E)']").click()
+        except NoSuchElementException:
+            turnOffCamera = driver.find_element_by_xpath("//div[@aria-label='Turn off camera (ctrl + e)']").click()
+
         try:
             bgBlur = driver.find_element_by_xpath(
                 "/html/body/div[2]/c-wiz/div/div/div[5]/div[3]/div/div[2]/div/div/div[1]/div/div[6]").click()
