@@ -107,9 +107,15 @@ def time_table():       # Checking for today's classes
         class_data = meetings.text.split('\n')
         driver.implicitly_wait(5)
         try:
-            class_time = dt.datetime.strptime(class_data[0], "%I:%M %p")
+            try:
+                class_time = dt.datetime.strptime(class_data[0], "%I:%M %p")
+            except ValueError:
+                class_time = dt.datetime.strptime(class_data[0], "%I:%M %p")
         except ValueError:
-            class_time = dt.datetime.strptime(class_data[0], "%H:%M")
+            try:
+                class_time = dt.datetime.strptime(class_data[0], "%H:%M")
+            except ValueError:
+                class_time = dt.datetime.strptime(class_data[0], "%H:%M")
 
         driver.implicitly_wait(5)
         timetable_list.append([class_time,
@@ -292,11 +298,7 @@ except FileNotFoundError:
           "'https://github.com/pixincreate/Automeet/releases/latest'", end='\n')
 
 # Logging in /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-try:
-    login(USERNAME, PASSWORD)
-except WebDriverException:
-    print('Please check your internet connection and try again.')
-    exit_now()
+login(USERNAME, PASSWORD)
 print('-' * 90, end='\n')
 
 # Redirecting to Google Meet Web-Page ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
