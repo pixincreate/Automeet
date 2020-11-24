@@ -203,7 +203,7 @@ def live_count():       # Print Live count of participants
 
 def end_class():       # Ends the current session
     live_count.max_count = 0
-    time.sleep(10)
+    time.sleep(20)
     # Clicks leave call button
     try:
         driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
@@ -335,25 +335,15 @@ else:
     print('Activity Logs:\n--------------', end='\n')
 
     for i in range(0, len(time_table())):
-        try:
-            classTitle = time_table()[i][1].upper()
-            classTime = time_table()[i][0].strftime("%I:%M %p")
-            scheduledTimeInSeconds = int((dt.datetime.strptime(classTime, "%I:%M %p") - dt.datetime(1900, 1, 1)).total_seconds())
-        except IndexError:
-            try:
-                driver.execute_script("alert('This was the last session for today. Tab closes in 5 seconds.')")
-                auto_close_popup_message()
-            except JavascriptException:
-                pass
-            print('\nLast session ended.\n')
-            time.sleep(5)
-            exit_now()
+        classTitle = time_table()[i][1].upper()
+        classTime = time_table()[i][0].strftime("%I:%M %p")
+        scheduledTimeInSeconds = int((dt.datetime.strptime(classTime, "%I:%M %p") - dt.datetime(1900, 1, 1)).total_seconds())
 
         try:
             classTimeNextSession = time_table()[i + 1][0].strftime("%I:%M %p")
             scheduledTimeInSecondsForNextSession = int((dt.datetime.strptime(classTimeNextSession, "%I:%M %p")
                                                         - dt.datetime(1900, 1, 1)).total_seconds())
-            if (scheduledTimeInSecondsForNextSession - present_time()) < 300:
+            if (scheduledTimeInSecondsForNextSession - present_time()) < 240 and (present_time() - scheduledTimeInSeconds) > 600:
                 classTitle = time_table()[i + 1][1].upper()
                 i += 1
         except IndexError:
@@ -462,15 +452,15 @@ else:
 
             try:
                 if int(live_count.number_of_participants) <= int(live_count.max_count) // 4:
-                    print('Meeting ends as Number of People Reduced to 1/4th the total strength.', end='\r', flush=True)
+                    print('Meeting will end now as Number of People Reduced to 1/4th the total strength.', end='\r', flush=True)
                     end_class()
                     break
                 elif "Several participants left the meeting." in live_count.left_or_rec_stop:
-                    print('Meeting ends as Several participants left the meeting.', end='\r', flush=True)
+                    print('Meeting will end now as Several participants left the meeting.', end='\r', flush=True)
                     end_class()
                     break
                 elif ("stopped recording" in live_count.left_or_rec_stop) and ((present_time() - scheduledTimeInSeconds) > 600):
-                    print('Meeting ends as the recording stopped.', end='\r', flush=True)
+                    print('Meeting will end now as the recording stopped.', end='\r', flush=True)
                     end_class()
                     break
                 else:
