@@ -110,10 +110,10 @@ def time_table():       # Checking for today's classes
             try:
                 class_time = dt.datetime.strptime(class_data[0], "%I:%M %p")
             except ValueError:
-                class_time = dt.datetime.strptime(class_data[0], "%I:%M %p")
+                class_time = dt.datetime.strptime(class_data[0], "%H:%M")
         except ValueError:
             try:
-                class_time = dt.datetime.strptime(class_data[0], "%H:%M")
+                class_time = dt.datetime.strptime(class_data[0], "%I:%M %p")
             except ValueError:
                 class_time = dt.datetime.strptime(class_data[0], "%H:%M")
 
@@ -130,7 +130,7 @@ def present_time():       # Grabs the current time
     return current_time_in_seconds
 
 
-def timer(seconds):
+def timer(seconds):       # Adds timer for the upcoming sessions to wait
     while seconds:
         mins, secs = divmod(seconds, 60)
         count_down = '{:02d}:{:02d}'.format(mins, secs)
@@ -148,7 +148,7 @@ def stale_element_relief():       # Refreshing DOM. It waits for the element to 
     join.click()
 
 
-def auto_close_popup_message():
+def auto_close_popup_message():       # Closes the pop-up message in the browser
     time.sleep(5)
     try:
         driver.implicitly_wait(10)
@@ -182,7 +182,10 @@ def live_count():       # Print Live count of participants
     except AttributeError or TypeError:
         print("Browser instance unexpectedly closed by the user. Please try again.")
         exit_now()
-
+    except WebDriverException as e:
+        if "not connected to DevTools" in e:
+            print("Please check your Internet connection and Re-Start the Automeet.")
+            exit_now()
     if int(live_count.number_of_participants) > live_count.max_count:
         live_count.max_count = int(live_count.number_of_participants)
 
@@ -199,10 +202,15 @@ def live_count():       # Print Live count of participants
             live_count.left_or_rec_stop = driver.find_element_by_class_name("aGJE1b").text
         except NoSuchElementException:
             pass
+    except WebDriverException as e:
+        if "not connected to DevTools" in e:
+            print("Please check your Internet connection and Re-Start the Automeet.")
+            exit_now()
 
 
 def end_class():       # Ends the current session
     live_count.max_count = 0
+    live_count.left_or_rec_stop = ""
     time.sleep(20)
     # Clicks leave call button
     try:
