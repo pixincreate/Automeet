@@ -211,7 +211,7 @@ def live_count():       # Print Live count of participants
 def end_class():       # Ends the current session
     live_count.max_count = 0
     live_count.left_or_rec_stop = ""
-    time.sleep(20)
+    time.sleep(10)
     # Clicks leave call button
     try:
         driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
