@@ -163,49 +163,62 @@ def auto_close_popup_message():       # Closes the pop-up message in the browser
 
 def live_count():       # Print Live count of participants
     try:
-        driver.implicitly_wait(6)
-        live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
+        try:
+            driver.implicitly_wait(6)
+            live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
 
-        if live_count.number_of_participants == '':
+            if live_count.number_of_participants == '':
+                live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
+
+        except StaleElementReferenceException:
+            driver.implicitly_wait(6)
+            live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
+
+            if live_count.number_of_participants == '':
+                live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
+
+        except ValueError:
             live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
 
-    except StaleElementReferenceException:
-        driver.implicitly_wait(6)
-        live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
-
-        if live_count.number_of_participants == '':
-            live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
-
-    except ValueError:
-        live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
-
-    except AttributeError or TypeError:
-        print("Browser instance unexpectedly closed by the user. Please try again.")
-        exit_now()
-    except WebDriverException as e:
-        if "not connected to DevTools" in e:
-            print("Please check your Internet connection and Re-Start the Automeet.")
+        except AttributeError or TypeError:
+            print("Browser instance unexpectedly closed by the user. Please try again.")
             exit_now()
-    if int(live_count.number_of_participants) > live_count.max_count:
-        live_count.max_count = int(live_count.number_of_participants)
+        except WebDriverException as e:
+            if "not connected to DevTools" in e:
+                print("Please check your Internet connection and Re-Start the Automeet.")
+                exit_now()
+        if int(live_count.number_of_participants) > live_count.max_count:
+            live_count.max_count = int(live_count.number_of_participants)
 
-    print(f'{"Live count of participants: " + live_count.number_of_participants + "    "}\r', end='', flush=True)       # Prints the live count
-    time.sleep(0.5)
+        print(f'{"Live count of participants: " + live_count.number_of_participants + "    "}\r', end='', flush=True)       # Prints the live count
+        time.sleep(0.5)
 
-    # Several Participants left the meeting or recording Stopped.
-    try:
-        live_count.left_or_rec_stop = driver.find_element_by_class_name("aGJE1b").text
-    except NoSuchElementException:
-        pass
-    except StaleElementReferenceException:
+        # Several Participants left the meeting or recording Stopped.
         try:
             live_count.left_or_rec_stop = driver.find_element_by_class_name("aGJE1b").text
         except NoSuchElementException:
             pass
-    except WebDriverException as e:
-        if "not connected to DevTools" in e:
-            print("Please check your Internet connection and Re-Start the Automeet.")
-            exit_now()
+        except StaleElementReferenceException:
+            try:
+                live_count.left_or_rec_stop = driver.find_element_by_class_name("aGJE1b").text
+            except NoSuchElementException:
+                pass
+        except WebDriverException as e:
+            if "not connected to DevTools" in e:
+                print("Please check your Internet connection and Re-Start the Automeet.")
+                exit_now()
+
+    except NoSuchElementException:  # An exception if Network change is detected.
+        try:
+            connection_lost = driver.find_element_by_class_name("RkzbPb").text
+            if "You lost your network connection. Trying to reconnect." in connection_lost:
+                try:
+                    WebDriverWait(driver, 180).until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "crqnQb")))
+                except TimeoutException:
+                    print("Please check your Internet connection and Re-Start the Automeet.")
+                    exit_now()
+        except NoSuchElementException:
+            pass
 
 
 def end_class():       # Ends the current session
@@ -444,19 +457,7 @@ else:
         # Clicks END button if conditions are satisfied.
         # Ends session when either of the condition is satisfied
         while True:
-            try:
-                live_count()
-            except NoSuchElementException:       # An exception if Network change is detected.
-                try:
-                    ConnectionLost = driver.find_element_by_class_name("RkzbPb").text
-                    if "You lost your network connection. Trying to reconnect." in ConnectionLost:
-                        try:
-                            WebDriverWait(driver, 180).until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "crqnQb")))
-                        except TimeoutException:
-                            print("Please check your Internet connection and Re-Start the Automeet.")
-                            exit_now()
-                except NoSuchElementException:
-                    pass
+            live_count()
 
             try:
                 if int(live_count.number_of_participants) <= int(live_count.max_count) // 4:
