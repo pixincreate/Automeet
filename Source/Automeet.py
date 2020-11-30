@@ -93,7 +93,7 @@ def login(username, password):       # Logs in the user
         del username, password
         exit_now()
     try:
-        WebDriverWait(driver, 60).until(lambda webpage: "https://stackoverflow.com/" in webpage.current_url)
+        WebDriverWait(driver, 6).until(lambda webpage: "https://stackoverflow.com/" in webpage.current_url)
         print('\nLogin Successful!\n')
     except TimeoutException:
         print('\nUsername/Password seems to be incorrect, please re-check\nand Re-Run the program.')
@@ -249,7 +249,7 @@ def end_class():       # Ends the current session
             driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
 
     double_quotes = "\""
-    print(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.                                     '}\r", end='', flush=True)
+    print(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.                                                              '}\r", end='', flush=True)
     print(end='\n\n')
     time.sleep(3)
     # Returns to the Home Screen
@@ -356,21 +356,30 @@ else:
     print('Activity Logs:\n--------------', end='\n')
 
     for i in range(0, len(time_table())):
-        classTitle = time_table()[i][1].upper()
-        classTime = time_table()[i][0].strftime("%I:%M %p")
-        scheduledTimeInSeconds = int((dt.datetime.strptime(classTime, "%I:%M %p") - dt.datetime(1900, 1, 1)).total_seconds())
-
         try:
-            classTimeNextSession = time_table()[i + 1][0].strftime("%I:%M %p")
-            scheduledTimeInSecondsForNextSession = int((dt.datetime.strptime(classTimeNextSession, "%I:%M %p")
-                                                        - dt.datetime(1900, 1, 1)).total_seconds())
-            if (scheduledTimeInSecondsForNextSession - present_time()) < 240 and (present_time() - scheduledTimeInSeconds) > 600:
-                classTitle = time_table()[i + 1][1].upper()
-                i += 1
+            classTitle = time_table()[i][1].upper()
+            classTime = time_table()[i][0].strftime("%I:%M %p")
+            scheduledTimeInSeconds = int((dt.datetime.strptime(classTime, "%I:%M %p") - dt.datetime(1900, 1, 1)).total_seconds())
+            try:
+                classTimeNextSession = time_table()[i + 1][0].strftime("%I:%M %p")
+                scheduledTimeInSecondsForNextSession = int((dt.datetime.strptime(classTimeNextSession, "%I:%M %p")
+                                                            - dt.datetime(1900, 1, 1)).total_seconds())
+                if (scheduledTimeInSecondsForNextSession - present_time()) < 240 and (present_time() - scheduledTimeInSeconds) > 600:
+                    classTitle = time_table()[i + 1][1].upper()
+                    i += 1
+            except IndexError:
+                lastClass = True
+                driver.execute_script("alert('This is the last session for today.')")
+                auto_close_popup_message()
         except IndexError:
-            lastClass = True
-            driver.execute_script("alert('This is the last session for today.')")
-            auto_close_popup_message()
+            try:
+                driver.execute_script("alert('This was the last session for today. Tab closes in 5 seconds.')")
+                auto_close_popup_message()
+            except JavascriptException:
+                pass
+            print('\nLast session ended.\n')
+            time.sleep(5)
+            exit_now()
 
         # Joining the class 90 seconds before the scheduled time.
         if ((scheduledTimeInSeconds - present_time()) <= 90) or "\nNOW" in time_table()[i][2].text.upper():
@@ -385,10 +394,9 @@ else:
             # When waiting time to class is more than 1m 30s
             driver.execute_script("alert('Will join 1m 30s before the session starts.')")
             auto_close_popup_message()
-            waitingTime = (scheduledTimeInSeconds - 90) - present_time()
-            timer(waitingTime)
             try:
-                time.sleep((scheduledTimeInSeconds - 90) - present_time())
+                waitingTime = (scheduledTimeInSeconds - 90) - present_time()
+                timer(waitingTime)
             except ValueError:
                 pass
             print('Joining \"' + classTitle + '\" now...', end='    ', flush=True)
@@ -468,7 +476,7 @@ else:
                     print('Meeting will end now as Several participants left the meeting.', end='\r', flush=True)
                     end_class()
                     break
-                elif ("stopped recording" in live_count.left_or_rec_stop) and ((present_time() - scheduledTimeInSeconds) > 600):
+                elif "stopped recording" in live_count.left_or_rec_stop:
                     print('Meeting will end now as the recording stopped.', end='\r', flush=True)
                     end_class()
                     break
