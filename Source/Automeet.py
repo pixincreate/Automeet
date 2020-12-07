@@ -101,10 +101,11 @@ def login(username, password):       # Logs in the user
 
 
 def time_table():       # Checking for today's classes
-    meetings_today = driver.find_elements_by_class_name("wKIIs")
+    meetings_today = driver.find_elements_by_class_name("wKIIs")  # VdLOD yUoCvf
     timetable_list = []
     for meetings in meetings_today:
         class_data = meetings.text.split('\n')
+        class_time = ""
         driver.implicitly_wait(5)
         try:
             try:
@@ -116,6 +117,10 @@ def time_table():       # Checking for today's classes
                 class_time = dt.datetime.strptime(class_data[0], "%I:%M %p")
             except ValueError:
                 class_time = dt.datetime.strptime(class_data[0], "%H:%M")
+        except Exception as e:
+            print(e, end="\n")
+            print("\n Please re-run the Automeet.")
+            exit_now()
 
         driver.implicitly_wait(5)
         timetable_list.append([class_time,
@@ -218,6 +223,7 @@ def live_count():       # Print Live count of participants
                     print("Please check your Internet connection and Re-Start the Automeet.")
                     exit_now()
         except NoSuchElementException:
+            live_count()
             pass
 
 
@@ -461,6 +467,11 @@ else:
                                   'Automeet will now exit.')
                             exit_now()
         print('Success.', end='\n')
+
+        try:
+            recordingJoinNow = driver.find_element_by_xpath("//div[@role='button']//span[contains(text(), 'Join now')]")
+        except NoSuchElementException:
+            pass
 
         # Clicks END button if conditions are satisfied.
         # Ends session when either of the condition is satisfied
