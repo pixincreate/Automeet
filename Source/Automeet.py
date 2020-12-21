@@ -77,13 +77,22 @@ def login(username, password):       # Logs in the user
                '1d95ddb5dea5225%22%2C%22cdl%22%3Anull%2C%22cid%22%3A%22717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com%22%'
                '2C%22k%22%3A%22Google%22%2C%22ses%22%3A%2226bafb488fcc494f92c896ee923849b6%22%7D&response_type=code&flowName=GeneralOAuthFlow')
 
-    driver.find_element_by_name("identifier").send_keys(username)
-    WebDriverWait(driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, "//*[@id='identifierNext']/div/button/div[2]"))).click()
+    try:
+        WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located((By.NAME, "identifier"))).send_keys(username)
+    except TimeoutException:
+        print("Your internet seems to be slow, check and Re-Start the Automeet.")
+        exit_now()
+    # driver.find_element_by_name("identifier").send_keys(username)
+    WebDriverWait(driver, 60).until(expected_conditions.element_to_be_clickable((By.XPATH, "//*[@id='identifierNext']/div/button/div[2]"))).click()
     driver.implicitly_wait(10)
 
     try:
-        driver.find_element_by_name("password").send_keys(password)
-        WebDriverWait(driver, 2).until(expected_conditions.element_to_be_clickable((By.XPATH, "//*[@id='passwordNext']/div/button/div[2]"))).click()
+        try:
+            WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located((By.NAME, "password"))).send_keys(password)
+        except TimeoutException:
+            print("Your internet seems to be slow, check and Re-Start the Automeet.")
+            exit_now()
+        WebDriverWait(driver, 5).until(expected_conditions.element_to_be_clickable((By.XPATH, "//*[@id='passwordNext']/div/button/div[2]"))).click()
     except TimeoutException:
         print('\nUsername/Password seems to be incorrect, please re-check\nand Re-Run the program.')
         del username, password
@@ -93,7 +102,7 @@ def login(username, password):       # Logs in the user
         del username, password
         exit_now()
     try:
-        WebDriverWait(driver, 6).until(lambda webpage: "https://stackoverflow.com/" in webpage.current_url)
+        WebDriverWait(driver, 60).until(lambda webpage: "https://stackoverflow.com/" in webpage.current_url)    # 6 was before
         print('\nLogin Successful!\n')
     except TimeoutException:
         print('\nUsername/Password seems to be incorrect, please re-check\nand Re-Run the program.')
@@ -169,14 +178,14 @@ def auto_close_popup_message():       # Closes the pop-up message in the browser
 def live_count():       # Print Live count of participants
     try:
         try:
-            driver.implicitly_wait(6)
+            driver.implicitly_wait(60)
             live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
 
             if live_count.number_of_participants == '':
                 live_count.number_of_participants = driver.find_element_by_class_name("rua5Nb").text.strip("()")
 
         except StaleElementReferenceException:
-            driver.implicitly_wait(6)
+            driver.implicitly_wait(60)
             live_count.number_of_participants = driver.find_element_by_class_name("ZaI3hb").find_element_by_class_name("wnPUne").text
 
             if live_count.number_of_participants == '':
@@ -504,6 +513,6 @@ else:
                 auto_close_popup_message()
             except JavascriptException:
                 pass
-            print('\nLast session ended.\n')
+            print('Last session ended.\n')
             time.sleep(5)
             exit_now()
