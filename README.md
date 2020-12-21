@@ -83,4 +83,6 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Modified ```Static waiting time``` into ```Dynamic waiting time```.
 - Update chrome driver to 87.0. Working in some spaces made **Transparent**.
 - Minor fixes to Last class and  ```You lost your network connection. Trying to reconnect.```.
+- Added compatibility for Slow internet.
+- Hotfix for Login Problem.
 #
