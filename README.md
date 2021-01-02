@@ -1,4 +1,6 @@
 # Automeet - Google Meet Meetings Automater!
+
+[![Automeet - Google Meet Automation Quick Start Guide ](https://i9.ytimg.com/vi_webp/0ml5XyKpFrs/mqdefault.webp?time=1609600500000&sqp=CPSbwv8F&rs=AOn4CLBnVnOBkzaDlN90GLFMRUbgWD6YJg)](https://youtu.be/0ml5XyKpFrs)  
 ![Automeet Downloads](https://img.shields.io/github/downloads/pixincreate/Automeet/total?color=Blue&label=Automeet%20Downloads&logo=PiXinCreate&logoColor=Blue&style=for-the-badge)  
 To download the **latest** release, click **_[here](https://github.com/pixincreate/Automeet/releases/latest)_**.
 
@@ -6,8 +8,6 @@ To download the **latest** release, click **_[here](https://github.com/pixincrea
 **Automeet** is all about automating the process of logging **in** and **out** when attending a Meeting on Google Meet platform with a single run.
 
 **Code by:** Pavana Narayana Bhat
-
-[![Automeet - Google Meet Automation Quick Start Guide ](https://i9.ytimg.com/vi_webp/0ml5XyKpFrs/mqdefault.webp?time=1609600500000&sqp=CPSbwv8F&rs=AOn4CLBnVnOBkzaDlN90GLFMRUbgWD6YJg)](https://youtu.be/0ml5XyKpFrs)
 
 ### PreRequisites:
 - **Windows** Operating system.
