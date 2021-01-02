@@ -7,6 +7,8 @@ To download the **latest** release, click **_[here](https://github.com/pixincrea
 
 **Code by:** Pavana Narayana Bhat
 
+[![Automeet - Google Meet Automation Quick Start Guide ](https://i9.ytimg.com/vi_webp/0ml5XyKpFrs/mqdefault.webp?time=1609565100000&sqp=CKyHwP8F&rs=AOn4CLACxVdzirfw57UFEou2D7cj4tc2SA)](https://youtu.be/0ml5XyKpFrs)
+
 ### PreRequisites:
 - **Windows** Operating system.
 - Firefox / Google Chrome / Brave (v**87.0** or **above**).
