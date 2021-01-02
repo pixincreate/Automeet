@@ -1,6 +1,6 @@
 # Automeet - Google Meet Meetings Automater!
 
-[![Automeet - Google Meet Automation Quick Start Guide ](https://i9.ytimg.com/vi_webp/0ml5XyKpFrs/mqdefault.webp?time=1609600500000&sqp=CPSbwv8F&rs=AOn4CLBnVnOBkzaDlN90GLFMRUbgWD6YJg)](https://youtu.be/0ml5XyKpFrs)  
+[![Automeet - Google Meet Automation Quick Start Guide ](https://github.com/pixincreate/Automeet/blob/main/Source/YouTube%20Thumbnail.png)](https://youtu.be/0ml5XyKpFrs)  
 ![Automeet Downloads](https://img.shields.io/github/downloads/pixincreate/Automeet/total?color=Blue&label=Automeet%20Downloads&logo=PiXinCreate&logoColor=Blue&style=for-the-badge)  
 To download the **latest** release, click **_[here](https://github.com/pixincreate/Automeet/releases/latest)_**.
 
