@@ -7,7 +7,7 @@ To download the **latest** release, click **_[here](https://github.com/pixincrea
 
 **Code by:** Pavana Narayana Bhat
 
-[![Automeet - Google Meet Automation Quick Start Guide ](https://i.ytimg.com/an_webp/0ml5XyKpFrs/mqdefault_6s.webp?du=3000&sqp=CKf1wf8F&rs=AOn4CLCAYf209QiZRbrWTTSH0HgowdJ8KA)](https://youtu.be/0ml5XyKpFrs)
+[![Automeet - Google Meet Automation Quick Start Guide ](https://i9.ytimg.com/vi_webp/0ml5XyKpFrs/mqdefault.webp?time=1609600500000&sqp=CPSbwv8F&rs=AOn4CLBnVnOBkzaDlN90GLFMRUbgWD6YJg)](https://youtu.be/0ml5XyKpFrs)
 
 ### PreRequisites:
 - **Windows** Operating system.
