@@ -54,7 +54,7 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 #
 ## Improvements over time:
 - Initial Release.(v2020.9.3)
-- Fixed ```IndexError```, ```NoSuchElementException``` that used to appear in common for no reasons.
+- Fixed ```IndexError```, ```NoSuchElementException``` that used to appear in common for no reasons.(As mentioned in the Quick Start Guide video, it's fixed.)
 - Some Console CLI changes to interact with user.
 - Reduced code complexity by creating functions for code re-use.
 - Fixed waiting time issues.
