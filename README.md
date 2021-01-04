@@ -86,5 +86,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Update chrome driver to 87.0. Working in some spaces made **Transparent**.
 - Minor fixes to Last class and  ```You lost your network connection. Trying to reconnect.```.
 - Added compatibility for Slow internet.
-- Hotfix for Login Problem.
+- Hotfix for Login Problem - Password used to print twice.
 #
