@@ -1,24 +1,16 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
----
-
 **Describe the bug**
-A clear and concise description of what the bug is.
+- A clear and concise description of what the bug is.
+- When the bug occurs. Not the time, but at what step.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Screenshots: MUST!**
+Provide the screenshot of the error.
 
 **Desktop (please complete the following information):**
  - OS: [e.g. Windows]
- - Browser [e.g. chrome]
+ - Browser [e.g. brave]
  - Version [e.g. 85]
 
 **Additional context**
