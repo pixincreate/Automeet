@@ -12,7 +12,7 @@ To download the **latest** release, click **_[here](https://github.com/pixincrea
 
 ### PreRequisites:
 - **Windows** Operating system.
-- Firefox / Google Chrome / Brave (v**87.0** or **above**).
+- Firefox / Google Chrome / Brave (v**90.0** or **above**).
 - A Google **Account**.
 - **Stable Internet** connection.
 
