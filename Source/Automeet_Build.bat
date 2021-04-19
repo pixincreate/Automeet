@@ -13,9 +13,9 @@ echo.
 echo.
 echo Automeet:
 echo.
-pyinstaller --noconfirm --onefile --console --icon "Drive:\path\to\icon\ pixincreate Automeet.ico" --add-binary "Drive:/path/to/pixincreate chromedriver.exe;./selenium/webdriver" --add-binary "Drive:/path/to/pixincreate geckodriver-32.exe;./selenium/webdriver" --add-binary "Drive:/path/to/pixincreate geckodriver-64.exe;./selenium/webdriver" "Drive:/path/to/pixincreate Automeet.py source code"
+pyinstaller --noconfirm --onefile --console --icon "E:\Coding\Python\My_Projects\GoogleMeetAutomation\Executables\Automeet.ico" --add-data "E:\Coding\Python\My_Projects\GoogleMeetAutomation\Executables\stealth;." --add-binary "E:/Coding/Python/My_Projects/GoogleMeetAutomation/Executables/Drivers/chromedriver.exe;./selenium/webdriver" --add-binary "E:/Coding/Python/My_Projects/GoogleMeetAutomation/Executables/Drivers/geckodriver-32.exe;./selenium/webdriver" --add-binary "E:/Coding/Python/My_Projects/GoogleMeetAutomation/Executables/Drivers/geckodriver-64.exe;./selenium/webdriver" "E:/Coding/Python/My_Projects/GoogleMeetAutomation/Automeet.py"
 echo.
-echo Automeet.exe has been successfully created for Automeet.py by PiXinCreate
+echo Automeet.exe has been successfully created for Automeet.py 
 echo.
 echo.
 pause.
