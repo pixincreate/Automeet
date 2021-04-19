@@ -37,6 +37,15 @@ Incase if you find any bugs, please raise an *[Issue Ticket](https://github.com/
 
 *Q*: **How EXECUTABLES are made**?  
 *A*: `.exe` has been created using *[pyinstaller](https://pypi.org/project/pyinstaller/)*.
+  
+*Q*: **How login process works**?**any references**?  
+*A*: Login works by redirecting Google Login to stackoverflow page using "DN" user-agent which is outdated and I believe that Google doesn't block that.  Visit below given links for reference:
+- https://stackoverflow.com/questions/67150869/selenium-google-login-blocked-in-automation-self-answered-bypassed-the-google
+- https://github.com/tovi-developer/gmail-login-selenium
+- https://stackoverflow.com/a/64514543/12320089
+- https://pypi.org/project/selenium-stealth/
+
+
 
 ### Feature updates(will be added - If Online meetings continues to be conducted everywhere):
 - Auto attendance (for students) that puts Present Sir / Mam on behalf of you.
