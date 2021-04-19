@@ -3,18 +3,19 @@ Automeet: Google Meet Automater
 Meeting Automation for https://www.meet.google.com
 Licensed under CC0-1.0 License to Pavana Narayana Bhat
 ------------------------------------------------------------------------------------------------------------------------
-Code by: Pavana Narayana Bhat AKA PiXinCreate
+Code by: PiXinCreate
 ------------------------------------------------------------------------------------------------------------------------
 Description:
     Automeet is a selenium based python script to
 join and exit online sessions / meetings on Google
 Meet that is scheduled in Google Calendar with a
-single login to Google Account via https://stackauth.com
+single login to Google Account via stackoverflow
 Automatically.
 
 NOTE: Password is invisible. Check the readme.md for more information.
 """
-# Importing packages /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+# Importing packages 
 import os
 import sys
 import time
@@ -22,6 +23,8 @@ import datetime as dt
 from msvcrt import getch
 
 from selenium import webdriver
+from selenium_stealth import stealth
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
@@ -37,12 +40,12 @@ from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import ElementClickInterceptedException
 
 
-# Setting console size ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# Setting console size 
 os.system('mode con: cols=93 lines=30')
 os.system('powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.height=5000;$W.buffersize=$B;}"')
 
 
-# Required Functions to be called ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# Required Functions to be called 
 def white_password(prompt):       # Secure password input, an alternative to getpass
     print(prompt, end='', flush=True)
     buf = b''
@@ -71,45 +74,38 @@ def resource_path(another_way):       # Provides the facility to run on both ter
 
 
 def login(username, password):       # Logs in the user
-    driver.get('https://accounts.google.com/o/oauth2/auth/identifier?client_id=717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent'
-               '.com&scope=profile%20email&redirect_uri=https%3A%2F%2Fstackauth.com%2Fauth%2Foauth2%2Fgoogle&state=%7B%22sid%22%3A1%2C%22st%22%3A%2'
-               '259%3A3%3Abbc%2C16%3A561fd7d2e94237c0%2C10%3A1599663155%2C16%3Af18105f2b08c3ae6%2C2f06af367387a967072e3124597eeb4e36c2eff92d3eef697'
-               '1d95ddb5dea5225%22%2C%22cdl%22%3Anull%2C%22cid%22%3A%22717762328687-iludtf96g1hinl76e4lc1b9a82g457nn.apps.googleusercontent.com%22%'
-               '2C%22k%22%3A%22Google%22%2C%22ses%22%3A%2226bafb488fcc494f92c896ee923849b6%22%7D&response_type=code&flowName=GeneralOAuthFlow')
+    driver.get("https://stackoverflow.com/users/login")
+    WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located((By.XPATH, '//*[@id="openid-buttons"]/button[1]'))).click()
 
     try:
-        WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located((By.NAME, "identifier"))).send_keys(username)
+        WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located((By.ID, "Email"))).send_keys(username)
     except TimeoutException:
-        print("Your internet seems to be slow, check and Re-Start the Automeet.")
+        print("Internet seems to be slow, check and Re-Start the Automeet.")
         exit_now()
-    # driver.find_element_by_name("identifier").send_keys(username)
-    WebDriverWait(driver, 60).until(expected_conditions.element_to_be_clickable((By.XPATH, "//*[@id='identifierNext']/div/button/div[2]"))).click()
-    driver.implicitly_wait(10)
+    WebDriverWait(driver, 60).until(expected_conditions.element_to_be_clickable((By.XPATH, "/html/body/div/div[2]/div[2]/div[1]/form/div/div/input"))).click()
+    time.sleep(0.5)
 
     try:
         try:
-            WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located((By.NAME, "password"))).send_keys(password)
+            WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located((By.ID, "password"))).send_keys(password)
         except TimeoutException:
-            print("Your internet seems to be slow, check and Re-Start the Automeet.")
+            print("Internet seems to be slow, check and Re-Start the Automeet.")
             exit_now()
-        WebDriverWait(driver, 5).until(expected_conditions.element_to_be_clickable((By.XPATH, "//*[@id='passwordNext']/div/button/div[2]"))).click()
-    except TimeoutException:
+        WebDriverWait(driver, 5).until(expected_conditions.element_to_be_clickable((By.ID, "submit"))).click()
+    except TimeoutException or NoSuchElementException:
         print('\nUsername/Password seems to be incorrect, please re-check\nand Re-Run the program.')
         del username, password
         exit_now()
-    except NoSuchElementException:
-        print('\nUsername/Password seems to be incorrect, please re-check\nand Re-Run the program.')
-        del username, password
-        exit_now()
+
     try:
-        WebDriverWait(driver, 60).until(lambda webpage: "https://stackoverflow.com/" in webpage.current_url)    # 6 was before
+        WebDriverWait(driver, 60).until(lambda webpage: "https://stackoverflow.com/" in webpage.current_url)
         print('\nLogin Successful!\n')
     except TimeoutException:
         print('\nUsername/Password seems to be incorrect, please re-check\nand Re-Run the program.')
         exit_now()
 
 
-def time_table():       # Checking for today's classes
+def time_table():       # Checking for today's sessions
     meetings_today = driver.find_elements_by_class_name("wKIIs")  # VdLOD yUoCvf
     timetable_list = []
     for meetings in meetings_today:
@@ -264,7 +260,7 @@ def end_class():       # Ends the current session
             driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
 
     double_quotes = "\""
-    print(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.                                                              '}\r", end='', flush=True)
+    print("{:<60s}".format(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.'}\r"), end='', flush=True)
     print(end='\n\n')
     time.sleep(3)
     # Returns to the Home Screen
@@ -281,27 +277,26 @@ def exit_now():       # Exits the script
     exit()
 
 
-# In The Beginning ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# In The Beginning //
 print('\n')
 print("        ••      ••    ••  ••••••••  ••••••••  ••••  ••••  ••••••••  ••••••••  ••••••••  ")
 print("       ••••     ••    ••     ••     ••    ••  •• •••• ••  ••        ••           ••     ")
 print("      ••  ••    ••    ••     ••     ••    ••  ••  ••  ••  ••••••    ••••••       ••     ")
 print("     ••••••••   ••    ••     ••     ••    ••  ••      ••  ••        ••           ••     ")
 print("    ••      ••  ••••••••     ••     ••••••••  ••      ••  ••••••••  ••••••••     ••     ")
-print("                     Google Meet Automater by Pavana Narayana Bhat                      ", end='\n\n')
+print("                         Google Meet Automater by PiXinCreate                           ", end='\n\n')
 print("-" * 90, end='\n')
 
-# Login Credentials //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# Login Credentials
 print('Google Account Login:\n---------------------', end='\n')
 USERNAME = input("User Name : ")
 PASSWORD = white_password(prompt="Password  : ")
 
-# Assigning Drivers //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# Assigning Drivers /
 options = Options()
 options.add_argument("start-maximized")
-driverPath = './selenium/webdriver/chromedriver.exe'
-driverPathF64 = './selenium/webdriver/geckodriver-64'
-driverPathF32 = './selenium/webdriver/geckodriver-32'
+options.add_experimental_option("excludeSwitches", ["enable-automation"])
+options.add_experimental_option('useAutomationExtension', False)
 
 # 1 to allow permissions and 2 to block them
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -310,6 +305,11 @@ options.add_experimental_option("prefs",
                                  "profile.default_content_setting_values.media_stream_camera": 1,
                                  "profile.default_content_setting_values.geolocation": 2,
                                  "profile.default_content_setting_values.notifications": 2})
+
+driverPath = './selenium/webdriver/chromedriver.exe'
+driverPathF64 = './selenium/webdriver/geckodriver-64'
+driverPathF32 = './selenium/webdriver/geckodriver-32'
+
 try:
     try:
         # For 64 Bit Brave
@@ -333,15 +333,40 @@ except FileNotFoundError:
     print("Webdriver seems to be outdated, download the LATEST VERSION of AUTOMEET from here: "
           "'https://github.com/pixincreate/Automeet/releases/latest'", end='\n')
 
-# Logging in /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+stealth(driver,
+        user_agent='DN',
+        languages=["en-US", "en"],
+        vendor="Google Inc.",
+        platform="Win32",
+        webgl_vendor="Intel Inc.",
+        renderer="Intel Iris OpenGL Engine",
+        fix_hairline=True,
+        )       # Before Login, using stealth
+
+# Logging in
 login(USERNAME, PASSWORD)
 print('-' * 90, end='\n')
 
-# Redirecting to Google Meet Web-Page ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-time.sleep(2)
-driver.get('https://meet.google.com')       # Redirecting to Google Meet from stackoverflow after logging in
+stealth(driver,
+        user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36',
+        languages=["en-US", "en"],
+        vendor="Google Inc.",
+        platform="Win32",
+        webgl_vendor="Intel Inc.",
+        renderer="Intel Iris OpenGL Engine",
+        fix_hairline=True,
+        )       # After logging in, revert back user agent to normal.
 
-# Automation Starts from here ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+# Redirecting to Google Meet Web-Page 
+time.sleep(2)
+driver.execute_script("window.open('https://meet.google.com')")
+driver.switch_to.window(driver.window_handles[1])       # Redirecting to Google Meet from stackoverflow after logging in
+driver.switch_to.window(driver.window_handles[0])
+driver.close()
+driver.switch_to.window(driver.window_handles[0])
+
+# Automation Starts from here ////
 # Declarations
 lastClass = False
 live_count.max_count = 0
