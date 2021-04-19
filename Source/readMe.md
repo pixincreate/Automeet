@@ -20,11 +20,12 @@ join and exit online sessions / meetings on Google
 
 Meet that is scheduled in Google Calendar with a
 
-single login to Google Account via [**_Stackauth_**](https://stackauth.com)
+single login to Google Account via stackoverflow
 
-Automatically.
+Automatically using stealth.
 
 **NOTE:** Password will be **HIDDEN**.  A **simple** approach to **_secure password input_**!.   
+I've shared the in my directory as it is.
 
 ## Source Contains:
 - Source code
