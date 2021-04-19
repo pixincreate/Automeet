@@ -306,9 +306,9 @@ options.add_experimental_option("prefs",
                                  "profile.default_content_setting_values.geolocation": 2,
                                  "profile.default_content_setting_values.notifications": 2})
 
-driverPath = './selenium/webdriver/chromedriver.exe'
-driverPathF64 = './selenium/webdriver/geckodriver-64'
-driverPathF32 = './selenium/webdriver/geckodriver-32'
+driverPath = '.\\selenium\\webdriver\\chromedriver.exe'
+driverPathF64 = '.\\selenium\\webdriver\\geckodriver-64'
+driverPathF32 = '.\\selenium\\webdriver\\geckodriver-32'
 
 try:
     try:
