@@ -88,5 +88,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Minor fixes to Last class and  ```You lost your network connection. Trying to reconnect.```.
 - Added compatibility for Slow internet.
 - Hotfix for Login Problem - Password used to print twice.
-- Modify the login process to Google Account by using [_**selenium_stealth**_](https://pypi.org/project/selenium-stealth/). Visit [_**this**_](https://stackoverflow.com/questions/67150869/selenium-google-login-blocked-in-automation-self-answered-bypassed-the-google)link for more details.
+- Modify the login process to Google Account by using [_**selenium_stealth**_](https://pypi.org/project/selenium-stealth/). Visit [_**this**_](https://stackoverflow.com/questions/67150869/selenium-google-login-blocked-in-automation-self-answered-bypassed-the-google) link for more details.
 #
