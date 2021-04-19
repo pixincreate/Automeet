@@ -44,9 +44,9 @@ Incase if you find any bugs, please raise an *[Issue Ticket](https://github.com/
 - https://github.com/tovi-developer/gmail-login-selenium
 - https://stackoverflow.com/a/64514543/12320089
 - https://pypi.org/project/selenium-stealth/
-
-
-
+- https://www.reddit.com/r/Python/comments/mtvbz1/selenium_google_login_blocked_in_automation/ (same as stackoverflow, but with public opinion.)
+  
+   
 ### Feature updates(will be added - If Online meetings continues to be conducted everywhere):
 - Auto attendance (for students) that puts Present Sir / Mam on behalf of you.
 - Make the UI interactable by replacing CLI with GUI.
