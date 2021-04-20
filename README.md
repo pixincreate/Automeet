@@ -102,5 +102,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Modify the login process to Google Account by using [_**selenium_stealth**_](https://pypi.org/project/selenium-stealth/). Visit [_**this**_](https://stackoverflow.com/questions/67150869/selenium-google-login-blocked-in-automation-self-answered-bypassed-the-google) link for more details.
 - Hotfix for ```filenotfounderror``` in the beginning after entering the login credentials by including stealth folder in bundle.
 - Code cleaning, and slowed down by adding sleep in between to avoid detection. Hotfix for browser not secure blah blah blah.
-- Security enhancements and Code cleaning to avoid crashes.
+- Security enhancements and Code cleaning to avoid crashes adn removed support for Firefox due to conflicts.
 #
