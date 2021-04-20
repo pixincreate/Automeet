@@ -15,6 +15,7 @@ To download the **latest** release, click **_[here](https://github.com/pixincrea
 - Firefox / Google Chrome / Brave (v**90.0** or **above**).
 - A Google **Account**.
 - **Stable Internet** connection.
+- It is RECOMMENDED to **TURN ON** **LESS SECURE APP ACCESS** in **Security Settings** which comes under **Google Settings** in order to avoid being detected and blocked on trying more than **thrice**(3 times).
 
 ### Usage:
 - Once the **PreRequisites** is satisfied, **Download** the executable from the *[releases section](https://github.com/pixincreate/Automeet/releases/latest)*.
