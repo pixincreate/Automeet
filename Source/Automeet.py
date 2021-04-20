@@ -75,22 +75,26 @@ def resource_path(another_way):       # Provides the facility to run on both ter
 
 def login(username, password):       # Logs in the user
     driver.get("https://stackoverflow.com/users/login")
+    time.sleep(0.1)
     WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located((By.XPATH, '//*[@id="openid-buttons"]/button[1]'))).click()
-
+    time.sleep(0.2)
     try:
         WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located((By.ID, "Email"))).send_keys(username)
     except TimeoutException:
         print("Internet seems to be slow, check and Re-Start the Automeet.")
         exit_now()
+    time.sleep(0.2)
     WebDriverWait(driver, 60).until(expected_conditions.element_to_be_clickable((By.XPATH, "/html/body/div/div[2]/div[2]/div[1]/form/div/div/input"))).click()
     time.sleep(0.5)
 
     try:
         try:
+            time.sleep(0.1)
             WebDriverWait(driver, 60).until(expected_conditions.presence_of_element_located((By.ID, "password"))).send_keys(password)
         except TimeoutException:
             print("Internet seems to be slow, check and Re-Start the Automeet.")
             exit_now()
+        time.sleep(0.2)
         WebDriverWait(driver, 5).until(expected_conditions.element_to_be_clickable((By.ID, "submit"))).click()
     except TimeoutException or NoSuchElementException:
         print('\nUsername/Password seems to be incorrect, please re-check\nand Re-Run the program.')
@@ -98,10 +102,13 @@ def login(username, password):       # Logs in the user
         exit_now()
 
     try:
+        time.sleep(0.1)
         WebDriverWait(driver, 60).until(lambda webpage: "https://stackoverflow.com/" in webpage.current_url)
         print('\nLogin Successful!\n')
+        del username, password
     except TimeoutException:
         print('\nUsername/Password seems to be incorrect, please re-check\nand Re-Run the program.')
+        del username, password
         exit_now()
 
 
@@ -260,7 +267,7 @@ def end_class():       # Ends the current session
             driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
 
     double_quotes = "\""
-    print("{:<60s}".format(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.'}\r"), end='', flush=True)
+    print(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.'}\r", end='', flush=True)
     print(end='\n\n')
     time.sleep(3)
     # Returns to the Home Screen
@@ -292,7 +299,7 @@ print('Google Account Login:\n---------------------', end='\n')
 USERNAME = input("User Name : ")
 PASSWORD = white_password(prompt="Password  : ")
 
-# Assigning Drivers /
+# Assigning Drivers
 options = Options()
 options.add_argument("start-maximized")
 options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -306,9 +313,9 @@ options.add_experimental_option("prefs",
                                  "profile.default_content_setting_values.geolocation": 2,
                                  "profile.default_content_setting_values.notifications": 2})
 
-driverPath = '.\\selenium\\webdriver\\chromedriver.exe'
-driverPathF64 = '.\\selenium\\webdriver\\geckodriver-64'
-driverPathF32 = '.\\selenium\\webdriver\\geckodriver-32'
+driverPath = './selenium/webdriver/chromedriver.exe'
+driverPathF64 = './selenium/webdriver/geckodriver-64'
+driverPathF32 = './selenium/webdriver/geckodriver-32'
 
 try:
     try:
