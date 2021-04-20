@@ -6,7 +6,7 @@ block_cipher = None
 
 a = Analysis(['E:/Coding/Python/My_Projects/GoogleMeetAutomation/Automeet.py'],
              pathex=['E:\\Coding\\Python\\My_Projects\\GoogleMeetAutomation\\Executables'],
-             binaries=[('E:/Coding/Python/My_Projects/GoogleMeetAutomation/Executables/Drivers/chromedriver.exe', './selenium/webdriver'), ('E:/Coding/Python/My_Projects/GoogleMeetAutomation/Executables/Drivers/geckodriver-32.exe', './selenium/webdriver'), ('E:/Coding/Python/My_Projects/GoogleMeetAutomation/Executables/Drivers/geckodriver-64.exe', './selenium/webdriver')],
+             binaries=[('E:/Coding/Python/My_Projects/GoogleMeetAutomation/Executables/Drivers/chromedriver.exe', '.')],
              datas=[('E:\\Coding\\Python\\My_Projects\\GoogleMeetAutomation\\Executables\\stealth', '.')],
              hiddenimports=[],
              hookspath=[],
