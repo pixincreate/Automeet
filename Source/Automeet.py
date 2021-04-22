@@ -272,7 +272,7 @@ try:
                 driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
 
         double_quotes = "\""
-        print(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.'}\r", end='', flush=True)
+        print("{:<60s}".format(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.'}\r"), end="", flush=True)
         print(end='\n\n')
         time.sleep(3)
         # Returns to the Home Screen
@@ -326,16 +326,16 @@ try:
 
     try:
         try:
-            # For 64 Bit Brave
-            options.binary_location = "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
+            # For Chrome
+            driver = webdriver.Chrome(executable_path=resource_path(driverPath), options=options)
         except WebDriverException:
-            # For 32 Bit Brave
-            options.binary_location = "C:\\Program Files (x86)\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
-        driver = webdriver.Chrome(options=options, executable_path=resource_path(driverPath))
-    except WebDriverException:
-        # For Chrome
-        driver = webdriver.Chrome(executable_path=resource_path(driverPath), options=options)
-
+            try:
+                # For 64 Bit Brave
+                options.binary_location = "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
+            except WebDriverException:
+                # For 32 Bit Brave
+                options.binary_location = "C:\\Program Files (x86)\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
+            driver = webdriver.Chrome(options=options, executable_path=resource_path(driverPath))
     except FileNotFoundError:
         print("Webdriver seems to be outdated, download the LATEST VERSION of AUTOMEET from here: "
               "'https://github.com/pixincreate/Automeet/releases/latest'", end='\n')
