@@ -272,7 +272,7 @@ try:
                 driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
 
         double_quotes = "\""
-        print("{:<60s}".format(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.'}\r"), end="", flush=True)
+        print("{:<120s}".format(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.'}\r"), end="", flush=True)
         print(end='\n\n')
         time.sleep(3)
         # Returns to the Home Screen
@@ -521,7 +521,11 @@ try:
                 live_count()
 
                 try:
-                    if int(live_count.number_of_participants) <= int(live_count.max_count) // 4:
+                    if "Your host ended the meeting for everyone" in driver.find_element_by_class_name("CRFCdf"):
+                        print('Meeting will end now as Host ended the meeting.', end='\r', flush=True)
+                        end_class()
+                        break
+                    elif int(live_count.number_of_participants) <= int(live_count.max_count) // 4:
                         print('Meeting will end now as Number of People Reduced to 1/4th the total strength.', end='\r', flush=True)
                         end_class()
                         break
