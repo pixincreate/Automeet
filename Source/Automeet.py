@@ -244,22 +244,12 @@ try:
                 pass
 
 
-    def end_class():       # Ends the current session
+    def end_class(did_host_end):       # Ends the current session
         live_count.max_count = 0
         live_count.left_or_rec_stop = ""
         time.sleep(10)
-        # Clicks leave call button
-        try:
-            driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
-        except NoSuchElementException:
-            driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
-            driver.implicitly_wait(2)
-            driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
-        except ElementNotInteractableException:
-            driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
-            driver.implicitly_wait(2)
-            driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
-        except StaleElementReferenceException:
+        if not did_host_end:
+            # Clicks leave call button
             try:
                 driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
             except NoSuchElementException:
@@ -270,6 +260,17 @@ try:
                 driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
                 driver.implicitly_wait(2)
                 driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
+            except StaleElementReferenceException:
+                try:
+                    driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()  # "class_name = U26fgb"
+                except NoSuchElementException:
+                    driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
+                    driver.implicitly_wait(2)
+                    driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
+                except ElementNotInteractableException:
+                    driver.find_element_by_class_name("EIlDfe").click()  # An empty click to make bottom bar visible
+                    driver.implicitly_wait(2)
+                    driver.find_element_by_xpath("//div[@aria-label='Leave call']").click()
 
         double_quotes = "\""
         print("{:<120s}".format(f"{'The meeting ' + double_quotes + classTitle + double_quotes + ' ended now.'}\r"), end="", flush=True)
@@ -523,19 +524,23 @@ try:
                 try:
                     if "Your host ended the meeting for everyone" in driver.find_element_by_class_name("CRFCdf"):
                         print('Meeting will end now as Host ended the meeting.', end='\r', flush=True)
-                        end_class()
+                        host_ended = 1
+                        end_class(host_ended)
                         break
                     elif int(live_count.number_of_participants) <= int(live_count.max_count) // 4:
                         print('Meeting will end now as Number of People Reduced to 1/4th the total strength.', end='\r', flush=True)
-                        end_class()
+                        host_ended = 0
+                        end_class(host_ended)
                         break
                     elif "Several participants left the meeting." in live_count.left_or_rec_stop:
                         print('Meeting will end now as Several participants left the meeting.', end='\r', flush=True)
-                        end_class()
+                        host_ended = 0
+                        end_class(host_ended)
                         break
                     elif "stopped recording" in live_count.left_or_rec_stop:
                         print('Meeting will end now as the recording stopped.', end='\r', flush=True)
-                        end_class()
+                        host_ended = 0
+                        end_class(host_ended)
                         break
                     else:
                         pass
