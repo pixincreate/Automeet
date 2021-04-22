@@ -26,6 +26,8 @@ To download the **latest** release, click **_[here](https://github.com/pixincrea
 - Please make sure that the **Google Meet meetings are scheduled on your Google Calendar** and the timings **doesnot** overlap with each other(like 2 meetings at the same time or whatever).
 - Do note that the **Password** that you enter will show you nothing.
 - **If you ever get _"Couldn't sign in you in, Your browser may be insecure and blah blah blah"_, Try clearing the _temp_ directory by pressing "WINDOWS_BUTTON + R" and type "%temp%" and select all by pressing "Ctrl + A", click "SHIFT+DELETE", and "OK"**.
+- Google **blocks** login if you try to login **3**+ times in a day for **24**+ hours.(_You know, Just Google things! If anything goes against it, block!_).
+- Blame/Curse Google every single day, every single minute.
 
 ### Found any bugs?
 Incase if you find any bugs, please raise an *[Issue Ticket](https://github.com/pixincreate/Automeet/issues/new/choose)* under the *[Issues Tab](https://github.com/pixincreate/Automeet/issues)* in this Repository. Will look into it, then solve the issue if it exist ASAP.
