@@ -106,4 +106,5 @@ I'm Pavana Narayana Bhat, a coder, and a YouTuber running PiXinCreate on YouTube
 - Code cleaning, and slowed down by adding sleep in between to avoid detection. Hotfix for browser not secure blah blah blah.
 - Security enhancements and Code cleaning to avoid crashes adn removed support for Firefox due to conflicts.
 - End meeting when host ends the meeting.
+- Fix ```NoSuchElementException``` that occurred after the session starts, as host have not ended meeting at the first place.
 #
