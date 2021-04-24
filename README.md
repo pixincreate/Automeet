@@ -25,8 +25,7 @@ To download the **latest** release, click **_[here](https://github.com/pixincrea
 ### Things to keep in mind:
 - Please make sure that the **Google Meet meetings are scheduled on your Google Calendar** and the timings **doesnot** overlap with each other(like 2 meetings at the same time or whatever).
 - Do note that the **Password** that you enter will show you nothing.
-- **If you ever get _"Couldn't sign in you in, Your browser may be insecure and blah blah blah"_, Try clearing the _temp_ directory by pressing "WINDOWS_BUTTON + R" and type "%temp%" and select all by pressing "Ctrl + A", click "SHIFT+DELETE", and "OK"**.
-- Google **blocks** login if you try to login **3**+ times in a day for **24**+ hours.(_You know, Just Google things! If anything goes against it, block!_).
+- **If you ever get _"Couldn't sign in you in, and blah blah blah"_, Try clearing the _temp_ directory by pressing "WINDOWS_BUTTON + R" and type "%temp%" and select all by pressing "Ctrl + A", click "SHIFT+DELETE", and "OK"** or if you try to login **3**+ times in a day, Google have a habit of **Block**ing you from logging in for **24**+ hours.(_You know, Just Google things! If anything goes against Google's will, Block!!!_).
 - Blame/Curse Google every single day, every single minute.
 
 ### Found any bugs?
