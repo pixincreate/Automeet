@@ -215,14 +215,44 @@ try:
             print(f'{"Live count of participants: " + live_count.number_of_participants + "    "}\r', end='', flush=True)       # Prints the live count
             time.sleep(0.5)
 
+        except NoSuchElementException:  # An exception if Network change is detected.
+            try:
+                connection_lost = driver.find_element_by_class_name("RkzbPb").text
+                if "You lost your network connection. Trying to reconnect." in connection_lost:
+                    try:
+                        WebDriverWait(driver, 180).until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "crqnQb")))
+                    except TimeoutException:
+                        print("Please check your Internet connection and Re-Start the Automeet.")
+                        exit_now()
+            except NoSuchElementException:
+                live_count()
+                pass
+
+    def exit_checker():
+        try:
             # Several Participants left the meeting or recording Stopped.
             try:
-                live_count.left_or_rec_stop = driver.find_element_by_class_name("aGJE1b").text
+                exit_checker.left_or_rec_stop = driver.find_element_by_class_name("aGJE1b").text
             except NoSuchElementException:
                 pass
             except StaleElementReferenceException:
                 try:
-                    live_count.left_or_rec_stop = driver.find_element_by_class_name("aGJE1b").text
+                    exit_checker.left_or_rec_stop = driver.find_element_by_class_name("aGJE1b").text
+                except NoSuchElementException:
+                    pass
+            except WebDriverException as e:
+                if "not connected to DevTools" in e:
+                    print("Please check your Internet connection and Re-Start the Automeet.")
+                    exit_now()
+
+            # Your host ended the meeting for everyone.
+            try:
+                exit_checker.host_end_meeting = driver.find_element_by_class_name("CRFCdf").text
+            except NoSuchElementException:
+                pass
+            except StaleElementReferenceException:
+                try:
+                    exit_checker.host_end_meeting = driver.find_element_by_class_name("CRFCdf").text
                 except NoSuchElementException:
                     pass
             except WebDriverException as e:
@@ -246,7 +276,7 @@ try:
 
     def end_class(did_host_end):       # Ends the current session
         live_count.max_count = 0
-        live_count.left_or_rec_stop = ""
+        exit_checker.left_or_rec_stop = ""
         time.sleep(10)
         if not did_host_end:
             # Clicks leave call button
@@ -323,12 +353,10 @@ try:
                                      "profile.default_content_setting_values.geolocation": 2,
                                      "profile.default_content_setting_values.notifications": 2})
 
-    driverPath = 'chromedriver.exe'
-
     try:
         try:
             # For Chrome
-            driver = webdriver.Chrome(executable_path=resource_path(driverPath), options=options)
+            driver = webdriver.Chrome(executable_path=resource_path('chromedriver.exe'), options=options)
         except WebDriverException:
             try:
                 # For 64 Bit Brave
@@ -336,7 +364,7 @@ try:
             except WebDriverException:
                 # For 32 Bit Brave
                 options.binary_location = "C:\\Program Files (x86)\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"
-            driver = webdriver.Chrome(options=options, executable_path=resource_path(driverPath))
+            driver = webdriver.Chrome(options=options, executable_path=resource_path('chromedriver.exe'))
     except FileNotFoundError:
         print("Webdriver seems to be outdated, download the LATEST VERSION of AUTOMEET from here: "
               "'https://github.com/pixincreate/Automeet/releases/latest'", end='\n')
@@ -379,7 +407,7 @@ try:
     # Declarations
     lastClass = False
     live_count.max_count = 0
-    live_count.left_or_rec_stop = live_count.rec_button = scheduledTimeInSeconds = classTime = classTitle = ""
+    exit_checker.left_or_rec_stop = exit_checker.host_end_meeting = live_count.rec_button = scheduledTimeInSeconds = classTime = classTitle = ""
 
     # Deleting the user data, i.e., taken in the beginning
     del USERNAME, PASSWORD
@@ -520,9 +548,9 @@ try:
             # Ends session when either of the condition is satisfied
             while True:
                 live_count()
-
+                exit_checker()
                 try:
-                    if "Your host ended the meeting for everyone" in driver.find_element_by_class_name("CRFCdf"):
+                    if "Your host ended the meeting for everyone" in exit_checker.host_end_meeting:
                         print('Meeting will end now as Host ended the meeting.', end='\r', flush=True)
                         host_ended = 1
                         end_class(host_ended)
@@ -532,12 +560,12 @@ try:
                         host_ended = 0
                         end_class(host_ended)
                         break
-                    elif "Several participants left the meeting." in live_count.left_or_rec_stop:
+                    elif "Several participants left the meeting." in exit_checker.left_or_rec_stop:
                         print('Meeting will end now as Several participants left the meeting.', end='\r', flush=True)
                         host_ended = 0
                         end_class(host_ended)
                         break
-                    elif "stopped recording" in live_count.left_or_rec_stop:
+                    elif "stopped recording" in exit_checker.left_or_rec_stop:
                         print('Meeting will end now as the recording stopped.', end='\r', flush=True)
                         host_ended = 0
                         end_class(host_ended)
