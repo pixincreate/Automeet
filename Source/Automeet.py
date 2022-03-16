@@ -371,7 +371,7 @@ try:
         exit_now()
 
     stealth(driver,
-            user_agent='DN',
+            # user_agent='DN',
             languages=["en-US", "en"],
             vendor="Google Inc.",
             platform="Win32",
